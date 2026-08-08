@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Avia Forecast Studio - integrated ingest, mapping and Studio (17 July 2026)</title>
+<style>
+:root{--ink:#1a2733;--mid:#5b6b7a;--line:#d7dee5;--a:#156082;--o:#E97132;--g:#196B24;--warn:#c62828;--band:#e8f0f6;--man:#fff3e6}
+*{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;background:#f4f6f8;color:var(--ink);font-size:13px}
+header{background:#fff;border-bottom:3px solid var(--a);padding:12px 24px;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+header h1{font-size:17px;margin:0}header .sub{color:var(--mid);font-size:11px}
+header .term{margin-left:auto;font-size:11px;color:var(--mid)}
+header .term input{width:52px;padding:3px;border:1px solid var(--line);font:inherit}
+header .term button{font:inherit;font-size:11px;padding:3px 8px;border:1px solid var(--a);background:#fff;color:var(--a);cursor:pointer}
+/* stage rail */
+.rail{display:flex;gap:0;background:#fff;border-bottom:1px solid var(--line);padding:0 24px}
+.rail div{padding:9px 16px;font-size:11px;color:var(--mid);border-bottom:3px solid transparent;position:relative}
+.rail div .n{display:inline-block;width:16px;height:16px;line-height:16px;text-align:center;border-radius:50%;background:var(--line);color:#fff;font-size:9px;margin-right:6px}
+.rail div.on{color:var(--a);border-bottom-color:var(--a);font-weight:bold}
+.rail div.on .n{background:var(--a)}
+.rail div.done .n{background:var(--g)}
+.rail div.done{color:var(--g)}
+.stagewrap{max-width:1100px;margin:16px auto;padding:0 24px}
+.card{background:#fff;border:1px solid var(--line);padding:14px;margin-bottom:14px}
+h2{font-size:12px;color:var(--a);margin:0 0 10px}
+.btnrow{margin:10px 0}
+.pri{padding:10px 16px;background:var(--a);color:#fff;border:none;font:inherit;cursor:pointer}
+.pri:disabled{background:#9fb4c2;cursor:not-allowed}
+.sec{padding:9px 14px;background:#fff;color:var(--a);border:1px solid var(--a);font:inherit;cursor:pointer;margin-right:8px}
+.note{font-size:10px;color:var(--mid);margin-top:6px}
+.warnnote{font-size:11px;color:var(--warn);margin-top:6px}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th,td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+th{background:var(--band);font-size:11px}
+select,input[type=text]{font:inherit;font-size:11px;padding:3px;border:1px solid var(--line);width:100%}
+.hi{color:var(--g);font-weight:bold}.lo{color:var(--o);font-weight:bold}.un{color:var(--warn);font-weight:bold}
+#mapstatus{font-size:12px;font-weight:bold;margin:10px 0}
+/* Studio layout */
+main{display:grid;gap:14px;padding:16px 24px;margin:0 auto;align-items:start;
+ grid-template-columns:250px 1fr 290px;max-width:1500px;
+ grid-template-areas:"tree editor cases" "tree charts cases"}
+.treecard{grid-area:tree}.editcard{grid-area:editor}.chartcard{grid-area:charts}.casecard{grid-area:cases}
+@media (min-width:1750px){
+ main{grid-template-columns:250px minmax(560px,1fr) minmax(460px,600px) 290px;max-width:2200px;
+  grid-template-areas:"tree editor charts cases"}
+ .chartcard{position:sticky;top:12px}
+}
+.tree div{padding:5px 8px;cursor:pointer;border-left:3px solid transparent}
+.tree .axis{font-weight:bold;margin-top:6px}
+.tree .cat{padding-left:22px;font-size:12px}
+.tree .sel{background:var(--band);border-left-color:var(--a)}
+.tree .sum{color:var(--mid);float:right;font-size:11px}
+.lever{margin:8px 0;padding:8px 10px;border:1px solid var(--line)}
+.lever label{display:block;font-size:11px;color:var(--mid);margin-bottom:2px}
+.lever .row{display:flex;gap:8px;align-items:center}
+.lever input[type=range]{flex:1}
+.lever .v{width:54px;text-align:right;font-weight:bold}
+.bench{font-size:10px;color:var(--mid);margin-top:2px}
+.verbatim{font-size:10px;color:var(--a);background:var(--band);padding:6px 8px;margin:6px 0}
+.provfrom{font-size:10px;color:var(--g);margin-top:3px}
+.locked{background:#f2f6f9;border:1px dashed var(--a);padding:8px;font-size:11px;color:var(--a)}
+.gridwrap{overflow-x:auto;border:1px solid var(--line);margin:8px 0}
+table.grid{border-collapse:collapse;font-size:10px}
+table.grid th{background:var(--band);padding:3px 4px;font-weight:bold;min-width:52px;border:1px solid var(--line)}
+table.grid th.unrev{background:#fdeacc}
+table.grid td{border:1px solid var(--line);padding:0}
+table.grid input{width:52px;border:none;font:inherit;font-size:10px;padding:3px 2px;text-align:right;background:#fff}
+table.grid td.man input{background:var(--man);font-weight:bold}
+.gridkey{font-size:10px;color:var(--mid);margin:2px 0 8px}
+.gridkey .k{display:inline-block;width:10px;height:10px;vertical-align:middle;border:1px solid var(--line);margin:0 3px 0 8px}
+.events table{border-collapse:collapse;width:100%;font-size:11px;margin:6px 0}
+.events th,.events td{border:1px solid var(--line);padding:3px 6px;text-align:left}
+.events input{width:100%;border:none;font:inherit;font-size:11px;padding:2px}
+.events .yr{width:56px}.events .val{width:64px}
+.small{font:inherit;font-size:10px;padding:3px 8px;border:1px solid var(--a);background:#fff;color:var(--a);cursor:pointer;margin:2px 4px 2px 0}
+.small.warn{border-color:var(--warn);color:var(--warn)}
+.expander{display:flex;gap:6px;align-items:center;font-size:10px;color:var(--mid);margin-top:4px;flex-wrap:wrap}
+.expander input{width:52px;padding:2px;border:1px solid var(--line);font:inherit;font-size:10px}
+svg{width:100%;height:200px;display:block}
+.chartbox{border:1px solid var(--line);padding:8px;margin-bottom:10px}
+.chartbox .t{font-weight:bold;font-size:12px;text-align:center}.chartbox .u{font-size:10px;color:var(--mid);text-align:center}
+.src{font-size:9px;color:var(--mid);margin-top:2px}
+.ovl{font-size:11px;border:1px solid var(--line);padding:8px 10px;margin-bottom:10px}
+.ovl label{display:block;margin:3px 0;cursor:pointer}
+.ovl .fixed{color:var(--g);font-size:10px}
+.cases button{font:inherit;font-size:11px;padding:5px 10px;margin-right:6px;border:1px solid var(--a);background:#fff;color:var(--a);cursor:pointer}
+.cases button.primary{background:var(--a);color:#fff}
+.caselist div{padding:6px 8px;border:1px solid var(--line);margin:5px 0;cursor:pointer;font-size:11px}
+.caselist .active{border-color:var(--a);background:var(--band)}
+.caselist .lineage{color:var(--mid);font-size:10px}
+.checks li{list-style:none;margin:5px 0;font-size:11px}
+.checks{padding:0;margin:0}
+.ok::before{content:"Ok";background:var(--g)}.watch::before{content:"WATCH";background:var(--o)}.err::before{content:"ERROR";background:var(--warn)}
+.ok::before,.watch::before,.err::before{color:#fff;font-size:9px;padding:2px 5px;margin-right:6px}
+.gen{width:100%;margin-top:10px;padding:10px;background:var(--a);color:#fff;border:none;font:inherit;cursor:pointer}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--ink);color:#fff;padding:12px 16px;font-size:11px;display:none;max-width:420px;z-index:60}
+.q{margin:10px 0;padding:8px 10px;border:1px solid var(--line)}
+.q label{display:block;font-size:11px;font-weight:bold;margin-bottom:4px}
+.q select,.q input{font:inherit;font-size:11px;padding:4px;border:1px solid var(--line)}
+.q .skip{float:right;font-size:10px;color:var(--mid);cursor:pointer;text-decoration:underline}
+.q .why{font-size:10px;color:var(--mid);margin-top:3px}
+footer{padding:12px 24px;font-size:9px;color:var(--mid)}
+</style>
+</head>
+<body>
+<header><h1>Avia Forecast Studio</h1>
+<span class="sub">Integrated v1: ingest, mapping, setup interview and levers as one flow (folds 09d into 09c) | engine not connected, all figures illustrative | Copyright Avia Solutions Limited</span>
+<span class="term" id="termWrap" style="display:none">Model term <input type="number" id="termIn" min="5" max="60"> years from <span id="y0lbl"></span> <button onclick="applyTerm()">Apply</button></span>
+</header>
+<div class="rail" id="rail">
+ <div data-st="ingest"><span class="n">1</span>Ingest</div>
+ <div data-st="mapping"><span class="n">2</span>Confirm mapping</div>
+ <div data-st="interview"><span class="n">3</span>Setup interview</div>
+ <div data-st="studio"><span class="n">4</span>Studio</div>
+</div>
+
+<!-- STAGE 1: INGEST -->
+<div class="stagewrap" id="stage_ingest">
+ <div class="card"><h2>Step 1: ingest the vendor chart of accounts</h2>
+  <p style="font-size:12px">Load the ingest's proposed T6 (t6_project_lines_proposed.tsv from the ingest output folder). The ingest reads whatever the vendor sent, model, P&amp;L or teaser, proposes a taxonomy code per line with a confidence, and detects the management case where the dataroom carries one. Nothing is fixed here: the next step is yours to confirm.</p>
+  <div class="btnrow">
+   <input type="file" id="filein" accept=".tsv,.txt"> <span class="note">or use a starting point below</span>
+  </div>
+  <div class="btnrow">
+   <button class="sec" onclick="loadOspreyDemo()">Load the Osprey teaser demo (18 lines, one unmapped and blocking)</button>
+   <button class="sec" onclick="startAviaStandard()">No vendor model: start from the Avia standard line set</button>
+  </div>
+  <div id="ingestsummary" class="note"></div>
+  <div class="note">The Avia standard path loads t6_default (line_sets tier 1) and goes straight to the setup interview; the mapping step is skipped because every line is already an Avia code.</div>
+ </div>
+</div>
+
+<!-- STAGE 2: MAPPING -->
+<div class="stagewrap" id="stage_mapping" style="display:none">
+ <div class="card"><h2>Step 2: confirm the vendor chart of accounts</h2>
+  <span class="note">Schema 11 v1.1: ingestion proposes, the analyst confirms. Each vendor line appears verbatim with its proposed code, confidence colour-coded, and a basis field that cannot stay blank. Unmapped lines BLOCK generation. Splits are entered as code:share:basis pairs separated by a bar; children rows are created on export and carry the R108 flag until confirmed against better data.</span>
+  <div id="mapstatus">No file loaded.</div>
+  <div id="tbl"></div>
+  <div class="btnrow" style="margin-top:12px">
+   <button class="sec" onclick="downloadConfirmed()">Download confirmed T6 (for build_model.py)</button>
+   <button class="pri" id="mapnext" onclick="mappingContinue()" disabled>Confirm mapping and continue to setup</button>
+  </div>
+  <div class="note">The confirmed T6 is the same file the Osprey demonstration hand-edited: it feeds build_model.py unchanged. It also sets which lines the Studio exposes levers for, so the levers reflect this airport's actual accounts, not a generic template.</div>
+ </div>
+</div>
+
+<!-- STAGE 3: INTERVIEW -->
+<div class="stagewrap" id="stage_interview" style="display:none">
+ <div class="card"><h2>Step 3: setup interview</h2>
+  <span class="note">Every question is skippable; answers only choose starting points. Everything stays visible and editable in the Studio.</span>
+  <div id="qs"></div>
+  <div class="btnrow">
+   <button class="pri" onclick="finishInterview(false)">Assemble starter model from answers</button>
+   <button class="sec" onclick="finishInterview(true)">Skip all: start from defaults (tier 1, 25-year term)</button>
+  </div>
+ </div>
+</div>
+
+<!-- STAGE 4: STUDIO -->
+<main id="stage_studio" style="display:none">
+  <div class="card treecard"><h2>Assumption tree</h2><div class="tree" id="tree"></div>
+    <div class="note" id="scopenote"></div>
+    <div class="note">Totals are always the sum of their categories. Each line exposes only the levers its driver profile allows (driver_profiles.tsv, seeded from the TAS v8 Suggested BPlan Driver column).</div></div>
+  <div class="card editcard"><h2 id="edtitle">Editor</h2>
+    <div id="editor"></div>
+    <div id="gridpanel"></div>
+    <div id="eventpanel"></div>
+    <button class="gen" onclick="exportT1()">Export active case to T1 (downloads header, T1 and actuals stub for build_model.py)</button>
+    <div class="note">The export writes the real ingestion tables (schema 11): build_model.py turns them into the bank-grade workbook. Traffic rows are a working-assumption bridge pending the engine pack (T4). Aero and opex events now export as reset and step rows; manual cells on aero lines and any confirmed vendor line without a tier-1 lever are listed in the export comments.</div></div>
+  <div class="card chartcard"><h2>Charts (live as you move the levers; on a wide screen this column stays beside the editor)</h2>
+    <div class="ovl"><b>Overlays</b><div id="overlays"></div>
+    <div class="note">The management case is the fixed case from the ingest (vendor projections mapped via T6). It never moves; your case is read against it. Absent when the dataroom carries none.</div></div>
+    <div class="chartbox"><div class="t" id="ct1">Selected line</div><div class="u" id="cu1"></div><svg id="c1" viewBox="0 0 340 186" preserveAspectRatio="none"></svg><div class="src">Source: illustrative demo state; AviaSolutions analysis</div></div>
+    <div class="chartbox"><div class="t">EBITDA</div><div class="u" id="cu2"></div><svg id="c2" viewBox="0 0 340 186" preserveAspectRatio="none"></svg><div class="src">Source: illustrative demo state; AviaSolutions analysis</div></div>
+  </div>
+  <div class="card casecard"><h2>Cases</h2><div class="cases">
+      <button class="primary" onclick="bank()">Bank current</button><button onclick="branch()">Branch variant</button></div>
+    <div class="caselist" id="cases"></div>
+    <h2 style="margin-top:14px">Coherence</h2><ul class="checks" id="checks"></ul>
+    <div class="note">Ranges are placeholders for WS4 history queries; the live tool quotes sample sizes. Split-estimate lines carry the R108 flag here.</div></div>
+</main>
+
+<div class="toast" id="toastEl"></div>
+<footer>Integrated Forecast Studio v1, 17 July 2026. Folds the mapping screen (09d) into the Studio (09c) so ingest, chart-of-accounts confirmation, setup interview and line levers are one flow. Stage 1 loads the ingest's proposed T6; stage 2 is the mapping screen (unmapped lines block, confirmed T6 exports unchanged for build_model.py and sets the Studio line scope); stage 3 is the setup interview; stage 4 is the Studio (spec 10 section 4c: line-specific levers, year grid with cell-level provenance, event lists, cases, coherence, traffic variants). Charts follow the Avia format (axes with tick values, year labels with the F suffix, end-value labels in line colour, bottom legend, no gridlines, zero-based axis, stated unit and period, singular Source line). Copyright Avia Solutions Limited. All rights reserved.</footer>
+<script>
+/* ============================ STAGE MACHINE ============================ */
+let STAGE="ingest";
+const STAGES=["ingest","mapping","interview","studio"];
+function showStage(s){
+ STAGE=s;
+ for(const st of STAGES){const el=document.getElementById("stage_"+st);if(el)el.style.display=(st===s)?(st==="studio"?"grid":"block"):"none";}
+ document.getElementById("termWrap").style.display=(s==="studio")?"inline":"none";
+ const done=STAGES.slice(0,STAGES.indexOf(s));
+ document.querySelectorAll("#rail div").forEach(d=>{const k=d.getAttribute("data-st");
+  d.className=(k===s)?"on":(done.includes(k)?"done":"");});
+ if(s==="mapping")drawMap();
+ if(s==="interview")drawInterview();
+ if(s==="studio")render();
+}
+
+/* ============================ TAXONOMY / STUDIO CONSTANTS ============================ */
+const CATS={"Non-aero":["Duty Free","Spec Shops","F&B","Car Parking","Car Rental","Lounge","Property","Fuel","Other"],
+ "Aero":["PSC","Landing dom","Landing intl","Landing cargo","Security","Terminal fee","CUTE","PBB","Other aero"],
+ "Opex":["Staff","Utilities","R&M","Insurance","Rent","Marketing","Cleaning","Other opex"]};
+/* Driver profile dictionary: which levers each line exposes, with the TAS v8 verbatim driver.
+   Data mirror of driver_profiles.tsv (seeded 16 July 2026 from TAS v8 3a/3b Clean tabs + v9 Control). */
+const PROFILES={
+ "Duty Free":{levers:["perpax","el","elsqm","sqmRate","sqm"],events:"contract renewal cycle (irregular list)",verbatim:"Unit revenue per SQM per Pax X [change in SQM] and [changes in total Pax]",src:"TAS v8 3a Clean, Suggested BPlan Driver column"},
+ "Spec Shops":{levers:["perpax","el","elsqm","sqmRate","sqm"],events:"contract renewal cycle (irregular list)",verbatim:"Commercial space rental: Unit revenue per SQM per Pax X [change in SQM] and [changes in total Pax]",src:"TAS v8 3a Clean"},
+ "F&B":{levers:["perpax","el","elsqm","sqmRate","sqm"],events:"contract renewal cycle (irregular list)",verbatim:"Commercial space rental pattern; ACI per-pax categories",src:"TAS v8 3a Clean + v9 ACI tab"},
+ "Car Parking":{levers:["perpax","el"],events:"operator contract renewal",verbatim:"Unit revenue per Pax x [changes in total Pax, excluding transfers]",src:"TAS v8 3a Clean"},
+ "Car Rental":{levers:["perpax","el"],events:"operator contract renewal",verbatim:"Car parking pattern (analogue); working assumption",src:"TAS v8 3a Clean pattern"},
+ "Lounge":{levers:["perpax","el"],events:"operator contract renewal",verbatim:"PRM / CIP: High elasticity to Total Pax growth",src:"TAS v8 3b Clean"},
+ "Property":{levers:["sqmRate","sqm"],events:"lease renewal list",verbatim:"Rental of premises: Unit rate per SQM x [change in SQM]",src:"TAS v8 3a Clean"},
+ "Fuel":{levers:["base","el"],events:"fuel contract renewal",verbatim:"Tariff for provision of aviation fuels and lubricants: See separate assessment",src:"TAS v8 3a Clean"},
+ "Other":{levers:["base","el"],events:null,verbatim:"Other income not prohibited by law: Profit on disposal? Zero going forward?",src:"TAS v8 3a Clean"},
+ "PSC":{levers:["perpax"],events:"regulatory reset dates",verbatim:"Unit charge x No. of Scheduled Departing Pax",src:"TAS v8 3b Clean"},
+ "Landing dom":{levers:["perpax"],events:"regulatory reset dates",verbatim:"Unit charge x No. of Scheduled ATMs",src:"TAS v8 3a Clean"},
+ "Landing intl":{levers:["perpax"],events:"regulatory reset dates",verbatim:"Unit charge x No. of Scheduled ATMs",src:"TAS v8 3a Clean"},
+ "Landing cargo":{levers:["perpax"],events:"regulatory reset dates",verbatim:"Unit charge x Cargo tonnage",src:"TAS v8 3a Clean"},
+ "Security":{levers:["perpax"],events:"regulatory reset dates",verbatim:"Passenger: Unit charge x No. of Passengers; Airline staff: % of Passenger Security Fee",src:"TAS v8 3a Clean"},
+ "Terminal fee":{levers:["perpax"],events:"regulatory reset dates",verbatim:"Airport Terminal Fee by segment (v9 Control pattern)",src:"TAS v9 Control tab"},
+ "CUTE":{levers:["perpax"],events:"contract renewal",verbatim:"CUTE Charges: Fixed % of ATM Runway charge",src:"TAS v8 3a Clean"},
+ "PBB":{levers:["perpax"],events:"contract renewal",verbatim:"PBB Charges by segment; average daily turnarounds per PBB; PBB occupancy",src:"TAS v9 Control tab"},
+ "Other aero":{levers:["base","el"],events:null,verbatim:"PIB / met / fire: % of total ATM Runway Charge",src:"TAS v8 3a Clean"},
+ "Staff":{levers:["base","el"],events:"outsourcing / restructuring events",verbatim:"Unit cost per Employee x [Change in headcount]; KPI pay / social payment: % of FTE costs",src:"TAS v8 3a Clean"},
+ "Utilities":{levers:["sqmRate","sqm","el"],events:"tariff resets",verbatim:"Electricity: Unit rate x [change in SQM], plus poss. elasticity to ATM growth",src:"TAS v8 3a Clean"},
+ "R&M":{levers:["base","el"],events:"post-capex step (whole new envelope)",verbatim:"Low elasticity to pax growth OR % of Terminal / Airfield asset value on balance sheet",src:"TAS v8 3a Clean"},
+ "Insurance":{levers:["base"],events:"renewal (annual)",verbatim:"% of asset value; Insurance Benchmark Analysis tab",src:"TAS v9 Insurance Benchmark tab"},
+ "Rent":{levers:["sqmRate","sqm"],events:"lease renewal list",verbatim:"Rental of premises: Unit rate per SQM x [change in SQM]",src:"TAS v8 3a Clean"},
+ "Marketing":{levers:["base","el"],events:null,verbatim:"Marketing research: Low elasticity to Pax growth",src:"TAS v8 3a Clean"},
+ "Cleaning":{levers:["sqmRate","sqm","el"],events:"FM contract renewal",verbatim:"Garbage removal / water disposal: Unit rate x [change in SQM] x [Change in Pax]",src:"TAS v8 3a Clean"},
+ "Other opex":{levers:["base","el"],events:null,verbatim:"IT: Low elasticity to pax growth OR % of IT asset value; admin: Fixed % of FTE costs",src:"TAS v8 3a Clean"}};
+const LEVERDEF={
+ perpax:{label:"Per-pax rate [EUR]",min:0,max:12,step:0.05,bench:"ACI Europe card (08): group medians by size; history via WS4"},
+ base:{label:"Base year level [EUR m]",min:0,max:40,step:0.1,bench:"history range placeholder (WS4 query, sample size shown live)"},
+ el:{label:"Elasticity to pax growth [x]",min:0,max:1.6,step:0.05,bench:"history p25-p75: 0.9-1.1 (placeholder)"},
+ elsqm:{label:"Elasticity to commercial sqm growth [x]",min:0,max:1,step:0.05,bench:"v9/Plovdiv grammar; history pending pilot resolve"},
+ sqmRate:{label:"Per-sqm rate [EUR k per sqm p.a.]",min:0,max:3,step:0.05,bench:"space-driven component; needs sqm allocation"},
+ sqm:{label:"Allocated space [sqm]",min:0,max:5000,step:50,bench:"typed, or proposed by the capacity provision engine (WS6) as editable event rows"}};
+/* Studio category to taxonomy code (schema 11). Inverted below to drive line scope from the confirmed T6. */
+const CODE={"Duty Free":["conc_dutyfree","total","na"],"Spec Shops":["conc_retail","total","na"],
+ "F&B":["conc_fb","total","na"],"Car Parking":["rev_carpark","total","na"],"Car Rental":["rev_carrental","total","na"],
+ "Lounge":["rev_lounge","total","na"],"Property":["rev_property","total","na"],"Fuel":["rev_fuel_throughput","total","na"],
+ "Other":["rev_nonaero_other","total","na"],"PSC":["rev_psc","total","aero"],"Landing dom":["rev_landing","dom","aero"],
+ "Landing intl":["rev_landing","intl","aero"],"Landing cargo":["rev_landing","cargo","aero"],
+ "Security":["rev_security","total","aero"],"Terminal fee":["rev_terminal_fee","total","aero"],
+ "CUTE":["rev_cute","total","aero"],"PBB":["rev_pbb","total","aero"],"Other aero":["rev_aero_other","total","aero"],
+ "Staff":["staff_costs","total","op"],"Utilities":["opex_utilities","total","op"],"R&M":["opex_rm","total","op"],
+ "Insurance":["opex_insurance","total","op"],"Rent":["opex_rent","total","op"],"Marketing":["opex_marketing","total","op"],
+ "Cleaning":["opex_cleaning","total","op"],"Other opex":["opex_other","total","op"]};
+const CODEtoCats={};
+for(const cat in CODE){const code=CODE[cat][0];(CODEtoCats[code]=CODEtoCats[code]||[]).push(cat);}
+/* Full taxonomy code universe for the mapping dropdown (schema 11 / line_sets). */
+const CODES=["conc_dutyfree","conc_retail","conc_fb","rev_advertising","rev_carpark","rev_carrental",
+ "rev_lounge","rev_property","rev_fuel_throughput","rev_nonaero_other","rev_psc","rev_landing",
+ "rev_security","rev_acft_parking","rev_night_surcharge","rev_terminal_fee","rev_cute","rev_pbb",
+ "rev_aero_other","staff_costs","opex_utilities","opex_rm","opex_insurance","opex_rent",
+ "opex_marketing","opex_cleaning","opex_other","pax_dom","pax_intl","atm_total","(unmapped)"];
+
+/* Scope: the set of Studio categories in play, derived from the confirmed T6 (or the full set on the Avia path). */
+let SCOPE=new Set(Object.keys(PROFILES));
+let ORPHANS=[];            /* confirmed vendor lines with no tier-1 lever category */
+let VENDOR_INGESTED=false; /* true once a vendor file/demo has been ingested */
+let ORIGIN_BY_CAT={};      /* category -> confirmed vendor line label, for provenance in the editor */
+
+/* ============================ MAPPING (folded from 09d) ============================ */
+let mapRows=[];
+function parseT6(text){
+ return text.split(/\r?\n/).filter(l=>l.trim()&&!l.startsWith("#")).map(l=>{
+  const p=l.split("\t");
+  return {line_id:p[0],label:p[1],parent:p[2],mapping:p[3],grain:p[4],origin:p[5]};});}
+function confOf(m){
+ if(!m||m==="-")return "unmapped";
+ return m.includes("high confidence")?"high":(m.includes("low confidence")?"low":"confirmed");}
+function codeOf(m){return (!m||m==="-")?"(unmapped)":m.split(":")[0];}
+function basisOf(m){
+ if(!m||m==="-")return "";
+ const first=m.split("|")[0].split(":");
+ return first.slice(2).join(":");}
+function drawMap(){
+ const t=document.getElementById('tbl');
+ let h="<table><tr><th>Line</th><th>Vendor label (verbatim)</th><th>Proposed code</th><th>Confidence</th><th>Mapping (code:share:basis, bar for splits)</th><th>Basis of confirmation</th></tr>";
+ mapRows.forEach((r,i)=>{
+  const cf=confOf(r.mapping);
+  const cls=cf==="high"?"hi":(cf==="unmapped"?"un":"lo");
+  const opts=CODES.map(c=>`<option${codeOf(r.mapping)===c?" selected":""}>${c}</option>`).join("");
+  h+=`<tr><td>${r.line_id}</td><td>${r.label}</td>
+   <td><select onchange="setCode(${i},this.value)">${opts}</select></td>
+   <td class="${cls}">${cf}</td>
+   <td><input type="text" value="${r.mapping==="-"?"":r.mapping.replace(/"/g,'&quot;')}" onchange="setMapping(${i},this.value)"></td>
+   <td><input type="text" placeholder="name the basis (never blank)" value="${basisOf(r.mapping).includes("CONFIRM")?"":basisOf(r.mapping).replace(/"/g,'&quot;')}" onchange="setBasis(${i},this.value)"></td></tr>`;});
+ t.innerHTML=h+"</table>";
+ const un=mapRows.filter(r=>confOf(r.mapping)==="unmapped").length;
+ document.getElementById('mapstatus').textContent=un?`${un} line(s) unmapped: generation stays BLOCKED and you cannot continue until every line maps.`:"All lines mapped: you can continue to setup.";
+ document.getElementById('mapnext').disabled=(mapRows.length===0)||(un>0);}
+function setCode(i,c){
+ if(c==="(unmapped)"){mapRows[i].mapping="-";}
+ else{const b=basisOf(mapRows[i].mapping)||"analyst confirmed on mapping screen";
+  mapRows[i].mapping=`${c}:1.0:${b.replace(/,? ?CONFIRM.*$/,"")||"analyst confirmed on mapping screen"}`;}
+ drawMap();}
+function setMapping(i,v){mapRows[i].mapping=v.trim()||"-";drawMap();}
+function setBasis(i,b){
+ if(mapRows[i].mapping==="-")return;
+ mapRows[i].mapping=mapRows[i].mapping.split("|").map(part=>{
+  const p=part.split(":");return `${p[0]}:${p[1]}:${b}`;}).join("|");
+ drawMap();}
+function buildConfirmed(){
+ const un=mapRows.filter(r=>confOf(r.mapping)==="unmapped");
+ if(un.length)return {blocked:un.map(r=>r.label)};
+ const out=["# T6 project_lines CONFIRMED on the mapping screen | "+new Date().toISOString().slice(0,10),
+  "# line_id\tlabel\tparent_line_id\ttaxonomy_codes\tforecast_grain\torigin"];
+ mapRows.forEach(r=>{
+  const codes=r.mapping.split("|");
+  if(codes.length>1){
+   out.push([r.line_id,r.label,"-",r.mapping,"children","vendor"].join("\t"));
+   codes.forEach((c,k)=>{const code=c.split(":")[0];
+    out.push([r.line_id+String.fromCharCode(97+k),`${r.label} - ${code} share`,r.line_id,
+     `${code}:1.0:child of split`,"this_line","split_estimate"].join("\t"));});
+  }else{
+   out.push([r.line_id,r.label,r.parent,r.mapping,r.grain,r.origin].join("\t"));}});
+ return {tsv:out.join("\n")+"\n"};}
+function downloadConfirmed(){
+ const b=buildConfirmed();
+ if(b.blocked){alert("Blocked: map these first: "+b.blocked.join(", "));return;}
+ download('t6_confirmed.tsv',b.tsv);
+ toast("Confirmed T6 downloaded. It feeds build_model.py exactly as the hand-edited Osprey file did.");}
+/* Derive the Studio line scope and per-line provenance from the confirmed rows. */
+function deriveScopeFromConfirmed(){
+ const b=buildConfirmed();
+ if(b.blocked)return false;
+ const rows=parseT6(b.tsv);
+ SCOPE=new Set();ORPHANS=[];ORIGIN_BY_CAT={};
+ rows.forEach(r=>{
+  if(r.grain==="children")return;                 /* split parent: its children carry the codes */
+  r.mapping.split("|").forEach(part=>{
+   const code=part.split(":")[0];
+   if(code==="-"||!code)return;
+   if(code.startsWith("pax_")||code.startsWith("atm_"))return; /* traffic: handled by the traffic axis */
+   const cats=CODEtoCats[code];
+   if(cats){cats.forEach(c=>{SCOPE.add(c);if(!ORIGIN_BY_CAT[c])ORIGIN_BY_CAT[c]=r.label;});}
+   else ORPHANS.push(`${r.label} (${code})`);
+  });});
+ return true;}
+function mappingContinue(){
+ if(!deriveScopeFromConfirmed()){alert("Map every line before continuing.");return;}
+ VENDOR_INGESTED=true;
+ showStage("interview");
+ toast(`Mapping confirmed: ${SCOPE.size} line(s) carried into the Studio`+(ORPHANS.length?`, ${ORPHANS.length} vendor line(s) retained at vendor grain with no tier-1 lever.`:"."));}
+
+/* ============================ INGEST STAGE ============================ */
+const OSPREY_PROPOSED=`# T6 project_lines PROPOSED by vendor ingest | source: vendor_teaser_demo.xlsx | 16 July 2026
+# Unmapped lines carry '-' and BLOCK generation until the analyst maps them.
+# line_id\tlabel\tparent_line_id\ttaxonomy_codes\tforecast_grain\torigin
+V001\tPassenger charges\t-\trev_psc:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V002\tLanding & parking fees\t-\trev_landing:1.0:auto-proposed from alias table, low confidence, CONFIRM before generation\tthis_line\tvendor
+V003\tSecurity charges\t-\trev_security:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V004\tOther aeronautical charges\t-\trev_aero_other:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V005\tRetail & duty free concessions\t-\tconc_dutyfree:1.0:auto-proposed from alias table, low confidence, CONFIRM before generation\tthis_line\tvendor
+V006\tFood and beverage\t-\tconc_fb:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V007\tCar park income\t-\trev_carpark:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V008\tRents & property income\t-\trev_property:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V009\tAdvertising\t-\trev_advertising:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V010\tOther operating income\t-\trev_nonaero_other:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V011\tWages and salaries (incl. social charges)\t-\tstaff_costs:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V012\tUtilities & energy\t-\topex_utilities:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V013\tRepairs & maintenance\t-\topex_rm:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V014\tInsurance premiums\t-\topex_insurance:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V015\tSales & marketing\t-\topex_marketing:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V016\tCleaning & waste services\t-\topex_cleaning:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+V017\tSundry recharges to group\t-\t-\tthis_line\tvendor
+V018\tOther operating costs\t-\topex_other:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation\tthis_line\tvendor
+`;
+function ingestText(text,label){
+ mapRows=parseT6(text);
+ const un=mapRows.filter(r=>confOf(r.mapping)==="unmapped").length;
+ const lo=mapRows.filter(r=>confOf(r.mapping)==="low").length;
+ document.getElementById('ingestsummary').innerHTML=
+  `Loaded ${label}: ${mapRows.length} lines, ${un} unmapped and blocking, ${lo} low confidence to review. Management case detected: ${VENDOR_INGESTED_SRC(label)}.`;
+ showStage("mapping");}
+function VENDOR_INGESTED_SRC(label){return label.indexOf("Osprey")>=0?"yes (vendor projections, fixed overlay)":"read from the ingest report";}
+function loadOspreyDemo(){ingestText(OSPREY_PROPOSED,"the Osprey teaser demo");}
+document.getElementById('filein').addEventListener('change',e=>{
+ const f=e.target.files[0]; if(!f)return;
+ const rd=new FileReader();
+ rd.onload=()=>ingestText(rd.result,f.name);
+ rd.readAsText(f);});
+function startAviaStandard(){
+ SCOPE=new Set(Object.keys(PROFILES));ORPHANS=[];ORIGIN_BY_CAT={};VENDOR_INGESTED=false;
+ document.getElementById('ingestsummary').textContent="Avia standard line set loaded (t6_default, line_sets tier 1). Mapping skipped: every line is already an Avia code.";
+ showStage("interview");}
+
+/* ============================ STUDIO MODEL ============================ */
+let Y0=2024,N=25;
+function defState(sizeFactor){
+ const f=sizeFactor||1;
+ const s={traffic:{engine:true,pack:"zagreb base 2026-07",g:0.04},cats:{}};
+ const perpax={"Duty Free":1.09,"Spec Shops":0.80,"F&B":0.65,"Car Parking":1.07,"Car Rental":0.30,"Lounge":0.16,
+  "PSC":8.5,"Landing dom":0.7,"Landing intl":2.5,"Landing cargo":0.2,"Security":2.1,"Terminal fee":1.8,"CUTE":0.5,"PBB":0.7};
+ const base={"Fuel":1.5,"Other":1.2,"Other aero":0.3,"Staff":22,"R&M":3.8,"Insurance":1.2,"Marketing":0.8,"Other opex":2.4};
+ const sqmR={"Property":1.2,"Utilities":0.9,"Rent":0.5,"Cleaning":0.35};
+ const sqmA={"Property":4200,"Utilities":3000,"Rent":1800,"Cleaning":3000,"Duty Free":1200,"Spec Shops":900,"F&B":700};
+ for(const ax in CATS)for(const c of CATS[ax]){
+  const P=PROFILES[c];
+  s.cats[c]={axis:ax,perpax:(perpax[c]||0)*f,base:(base[c]||0)*f,el:P.levers.includes("el")?(ax==="Opex"?0.6:1.0):0,
+   elsqm:P.levers.includes("elsqm")?0.3:0,sqmRate:sqmR[c]||0,sqm:sqmA[c]||0,events:[],manual:{}};}
+ s.cats["Duty Free"].events=[{y:2029,v:0.08,note:"renewal, assumed uplift"},{y:2034,v:0.06,note:"renewal, shorter cycle"},{y:2040,v:0.08,note:"renewal"}];
+ return s;}
+let cases=[],active=1,selCat="Duty Free",interviewAns={};
+const st=()=>cases.find(c=>c.id===active).state;
+const cs=()=>cases.find(c=>c.id===active);
+const inScope=c=>SCOPE.has(c);
+function firstScopeCat(){for(const ax in CATS)for(const c of CATS[ax])if(inScope(c))return c;return "Traffic";}
+function pax(s){const g=s.traffic.g+((s.traffic.dpp||0)/100);const p=[5.5];for(let i=1;i<N;i++)p.push(p[i-1]*(1+g*Math.pow(0.97,i)));return p;}
+function series(s,c){const k=s.cats[c],p=pax(s),out=[];
+ let prev=null;
+ for(let i=0;i<N;i++){const yr=Y0+i;let v;
+  if(i===0){v=(k.perpax*p[0])+(k.base)+(k.sqmRate*k.sqm/1000);}
+  else{v=prev*(1+(p[i]/p[i-1]-1)*k.el);
+   const ev=k.events.find(e=>+e.y===yr); if(ev)v*=(1+ +ev.v);}
+  if(k.manual[yr]!==undefined)v=+k.manual[yr];   /* manual cell feeds the chain, as in Excel */
+  out.push(v);prev=v;}
+ return out;}
+function totals(s){const p=pax(s);let rev=Array(N).fill(0),op=Array(N).fill(0);
+ for(const c in s.cats){if(!inScope(c))continue;const ser=series(s,c);for(let i=0;i<N;i++){if(s.cats[c].axis==="Opex")op[i]+=ser[i];else rev[i]+=ser[i];}}
+ return {rev,op,eb:rev.map((r,i)=>r-op[i]),p};}
+function axisSum(s,ax){let t=Array(N).fill(0);for(const c in s.cats)if(s.cats[c].axis===ax&&inScope(c)){const ser=series(s,c);for(let i=0;i<N;i++)t[i]+=ser[i];}return t;}
+function drawTree(){const s=st();let h=`<div class="axis ${selCat==='Traffic'?'sel':''}" onclick="pick('Traffic')">Traffic <span class="sum">${s.traffic.engine?'engine-fed':'manual'}</span></div>`;
+ for(const ax in CATS){const inAx=CATS[ax].filter(inScope);if(!inAx.length)continue;
+  h+=`<div class="axis">${ax} <span class="sum">${axisSum(s,ax)[0].toFixed(1)} EUR m y1</span></div>`;
+  for(const c of inAx)h+=`<div class="cat ${selCat===c?'sel':''}" onclick="pick('${c.replace(/'/g,"\\'")}')">${c} <span class="sum">${series(s,c)[0].toFixed(1)}</span></div>`;}
+ document.getElementById('tree').innerHTML=h;}
+function pick(c){selCat=c;render();}
+function lever(id,def,val){return `<div class="lever"><label>${def.label}</label><div class="row"><input type="range" min="${def.min}" max="${def.max}" step="${def.step}" value="${val}" oninput="setv('${id}',this.value)"><span class="v" id="v_${id}">${val}</span></div><div class="bench">${def.bench}</div></div>`;}
+function drawEditor(){const s=st(),ed=document.getElementById('editor'),gp=document.getElementById('gridpanel'),ep=document.getElementById('eventpanel');
+ if(selCat==='Traffic'){document.getElementById('edtitle').textContent="Traffic axis";
+  const tv=cs().trafficVariant;
+  let h=`<div class="locked">Engine-fed base: pack "${s.traffic.pack}" (Cockpit contract, decision note 14). The base never moves; traffic VARIANTS branch off it with their deltas confined to this axis.</div>`;
+  if(tv){h+=`<div class="lever"><label>Variant growth delta [percentage points on the locked base]</label>
+   <div class="row"><input type="range" min="-2" max="2" step="0.1" value="${s.traffic.dpp||0}" oninput="setTrafficDelta(this.value)"><span class="v" id="v_dpp">${s.traffic.dpp||0}</span></div>
+   <div class="bench">A model-side variation for the round trip, never a forecast; the variation note sends it back to the forecaster.</div></div>
+   <div class="lever"><label>Variation rationale (goes on the note)</label>
+   <div class="row"><input type="text" style="width:100%;padding:4px;border:1px solid var(--line);font:inherit" value="${(s.traffic.vnote||'').replace(/"/g,'&quot;')}" onchange="st().traffic.vnote=this.value"></div></div>
+   <button class="small" onclick="exportVariationNote()">Export traffic variation note (for the forecaster)</button>`;}
+  else h+=`<button class="small" onclick="branchTraffic()">Create traffic variant (branch on the locked base)</button>
+   <div class="note">The round trip (decision note 14): vary traffic here, read the financial consequence at once, send the variation note back to the forecaster. Today this loop runs visually and takes weeks.</div>`;
+  ed.innerHTML=h;
+  gp.innerHTML="";ep.innerHTML="";return;}
+ const k=s.cats[selCat],P=PROFILES[selCat];
+ document.getElementById('edtitle').textContent=selCat+" (line-specific levers per driver profile)";
+ let h=`<div class="verbatim">Driver profile: ${P.verbatim}<br>Source: ${P.src}</div>`;
+ if(ORIGIN_BY_CAT[selCat])h+=`<div class="provfrom">Confirmed from vendor line: ${ORIGIN_BY_CAT[selCat]} (mapping screen).</div>`;
+ for(const l of P.levers)h+=lever(l,LEVERDEF[l],k[l]);
+ ed.innerHTML=h;
+ drawGrid();drawEvents();}
+function drawGrid(){const s=st(),k=s.cats[selCat],ser=series(s,selCat),gp=document.getElementById('gridpanel');
+ const unrev=cs().unrevFrom||0;
+ let th="",td="";
+ for(let i=0;i<N;i++){const yr=Y0+i;
+  th+=`<th class="${yr>=unrev&&unrev?'unrev':''}">${yr}F</th>`;
+  const man=k.manual[yr]!==undefined;
+  td+=`<td class="${man?'man':''}"><input value="${ser[i].toFixed(2)}" onchange="gridEdit(${yr},this.value)" title="${man?'manual cell (analyst)':'generated from levers and events'}"></td>`;}
+ const nman=Object.keys(k.manual).length;
+ gp.innerHTML=`<h2>Year grid: levers propose, the grid disposes</h2>
+ <div class="gridwrap"><table class="grid"><tr>${th}</tr><tr>${td}</tr></table></div>
+ <div class="gridkey">Cell provenance: <span class="k" style="background:#fff"></span> generated <span class="k" style="background:var(--man)"></span> manual (${nman} cell${nman===1?'':'s'}) ${unrev?`<span class="k" style="background:#fdeacc"></span> years added by term extension, unreviewed until touched`:''}</div>
+ <button class="small ${nman?'warn':''}" onclick="regen()">Regenerate grid from levers${nman?` (asks first: ${nman} manual cell${nman===1?'':'s'})`:''}</button>`;}
+function gridEdit(yr,v){const k=st().cats[selCat];v=parseFloat(v);if(isNaN(v))return;
+ k.manual[yr]=v;const c=cs();if(!c.banked&&c.parent)c.deltas=[...new Set([...c.deltas,`${selCat}.grid${yr}`])];
+ render(false);}
+function regen(){const k=st().cats[selCat],nman=Object.keys(k.manual).length;
+ if(nman&&!confirm(`${selCat} has ${nman} manual cell(s): ${Object.keys(k.manual).join(", ")}.\nRegenerating from levers will overwrite them. Regeneration never overwrites silently; keep them by cancelling.`))return;
+ k.manual={};toast(nman?"Manual cells cleared; grid regenerated from levers and events.":"Grid regenerated from levers and events.");render(false);}
+function drawEvents(){const s=st(),k=s.cats[selCat],P=PROFILES[selCat],ep=document.getElementById('eventpanel');
+ if(!P.events){ep.innerHTML=`<div class="note">No event lever in this line's driver profile.</div>`;return;}
+ let rows=k.events.map((e,i)=>`<tr><td class="yr"><input value="${e.y}" onchange="evEdit(${i},'y',this.value)"></td><td class="val"><input value="${e.v}" onchange="evEdit(${i},'v',this.value)"></td><td><input value="${(e.note||'').replace(/"/g,'&quot;')}" onchange="evEdit(${i},'note',this.value)"></td><td><button class="small warn" onclick="evDel(${i})">remove</button></td></tr>`).join('');
+ ep.innerHTML=`<h2>Event list (${P.events})</h2>
+ <div class="events"><table><tr><th>Year</th><th>Uplift [x]</th><th>Note</th><th></th></tr>${rows||''}</table></div>
+ <button class="small" onclick="evAdd()">Add event row</button>
+ <div class="expander">Cycle convenience (expands into editable rows only): every <input id="cyN" value="5"> years from <input id="cyY" value="${Y0+5}"> uplift <input id="cyV" value="0.08"> <button class="small" onclick="expandCycle()">Expand to rows</button></div>
+ <div class="note">Events are lists, not cycles: renewals at 7 then 5 then 6 years are three editable rows. Provision-engine space events would arrive here as proposed rows to accept or edit.</div>`;}
+function evEdit(i,f,v){const k=st().cats[selCat];k.events[i][f]=f==='note'?v:parseFloat(v);markDelta(`${selCat}.event${i}`);render(false);}
+function evDel(i){st().cats[selCat].events.splice(i,1);markDelta(`${selCat}.events`);render(false);}
+function evAdd(){st().cats[selCat].events.push({y:Y0+3,v:0.05,note:"new event"});markDelta(`${selCat}.events`);render(false);}
+function expandCycle(){const n=parseInt(document.getElementById('cyN').value),y1=parseInt(document.getElementById('cyY').value),v=parseFloat(document.getElementById('cyV').value);
+ const k=st().cats[selCat];let added=0;
+ for(let y=y1;y<Y0+N&&added<12;y+=n){k.events.push({y,v,note:`cycle expansion, every ${n}y`});added++;}
+ markDelta(`${selCat}.events`);toast(added+" event rows created from the cycle input; edit or drag any of them individually (the cycle itself is not stored).");render(false);}
+function markDelta(d){const c=cs();if(!c.banked&&c.parent)c.deltas=[...new Set([...c.deltas,d])];}
+function setv(id,v){const s=st();v=parseFloat(v);const el=document.getElementById('v_'+id);if(el)el.textContent=v;
+ s.cats[selCat][id]=v;markDelta(selCat+"."+id);render(false);}
+/* Avia chart format (mirrors avia_chart_style.py conventions at UI scale). */
+const PALETTE=['#156082','#E97132','#196B24','#0F9ED5','#A02B93','#4EA72E'];
+function chart(svg,list){
+ const L=38,R=330,T=12,B=148;
+ const mx=Math.max(1e-9,...list.flatMap(s=>s.pts))*1.1;
+ const X=i=>L+(R-L)*(N>1?i/(N-1):0),Y=v=>B-(B-T)*v/mx;
+ let h="";
+ h+=`<line x1="${L}" y1="${T-4}" x2="${L}" y2="${B}" stroke="#5b6b7a" stroke-width="1"/>`;
+ h+=`<line x1="${L}" y1="${B}" x2="${R}" y2="${B}" stroke="#5b6b7a" stroke-width="1"/>`;
+ for(const v of [0,mx/2,mx]){const fy=Y(v);
+  h+=`<line x1="${L-3}" y1="${fy}" x2="${L}" y2="${fy}" stroke="#5b6b7a" stroke-width="1"/>`;
+  h+=`<text x="${L-5}" y="${fy+3}" font-size="8" text-anchor="end" fill="#5b6b7a" font-family="Arial">${v>=100?v.toFixed(0):v.toFixed(1)}</text>`;}
+ const marks=[...new Set([0,Math.round((N-1)/3),Math.round(2*(N-1)/3),N-1])];
+ for(const i of marks)h+=`<text x="${X(i)}" y="${B+11}" font-size="8" text-anchor="middle" fill="#5b6b7a" font-family="Arial">${Y0+i}F</text>`;
+ for(const s of list){
+  const p=s.pts.map((v,i)=>`${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(' ');
+  h+=`<polyline points="${p}" fill="none" stroke="${s.color}" stroke-width="2"${s.dash?` stroke-dasharray="${s.dash}"`:''}/>`;
+  h+=`<text x="${R+2}" y="${Y(s.pts[N-1])+3}" font-size="8" font-weight="bold" text-anchor="start" fill="${s.color}" font-family="Arial">${s.pts[N-1].toFixed(1)}</text>`;}
+ let lx=L;
+ for(const s of list){
+  h+=`<line x1="${lx}" y1="172" x2="${lx+14}" y2="172" stroke="${s.color}" stroke-width="2"${s.dash?` stroke-dasharray="${s.dash}"`:''}/>`;
+  h+=`<text x="${lx+17}" y="175" font-size="8" fill="#1a2733" font-family="Arial">${s.label}</text>`;
+  lx+=17+s.label.length*4.3+16;}
+ svg.innerHTML=h;}
+/* Management case: the fixed case from the ingest, when the dataroom carries one. */
+let MGMT=null;
+function buildMgmt(){const s=defState(1.02);s.traffic.g=0.052;
+ s.cats["Duty Free"].perpax*=1.18;s.cats["Spec Shops"].perpax*=1.12;s.cats["Staff"].base*=0.93;
+ return {name:"Management case (ingested, fixed)",state:s};}
+let overlays=new Set(["mgmt"]);
+function toggleOverlay(key){if(overlays.has(key))overlays.delete(key);else overlays.add(key);render(false);}
+function drawOverlays(){const el=document.getElementById('overlays');let h="";
+ if(MGMT)h+=`<label><input type="checkbox" ${overlays.has('mgmt')?'checked':''} onchange="toggleOverlay('mgmt')"> ${MGMT.name} <span class="fixed">fixed</span></label>`;
+ else h+=`<div class="note">No management case in this ingest.</div>`;
+ for(const c of cases)if(c.id!==active)h+=`<label><input type="checkbox" ${overlays.has('c'+c.id)?'checked':''} onchange="toggleOverlay('c${c.id}')"> ${c.name}${c.banked?' [banked]':''}</label>`;
+ el.innerHTML=h;}
+function overlayList(fn){const s=st(),out=[{pts:fn(s),label:cs().name,color:PALETTE[0]}];
+ let pi=1;
+ if(MGMT&&overlays.has('mgmt')){out.push({pts:fn(MGMT.state),label:"Management (fixed)",color:PALETTE[2],dash:"2,3"});pi=3;}
+ for(const c of cases)if(c.id!==active&&overlays.has('c'+c.id)){
+  out.push({pts:fn(c.state),label:c.name,color:PALETTE[pi%PALETTE.length],dash:"5,3"});pi++;}
+ return out;}
+function render(tree=true){
+ if(STAGE!=="studio")return;
+ if(!inScope(selCat)&&selCat!=='Traffic')selCat=firstScopeCat();
+ drawTree();drawEditor();drawOverlays();
+ const c1=document.getElementById('c1'),c2=document.getElementById('c2');
+ const span=`EUR m, ${Y0}-${Y0+N-1}, forecast, active case vs overlays`;
+ document.getElementById('cu1').textContent=selCat==='Traffic'?`m pax, ${Y0}-${Y0+N-1}, forecast, active case vs overlays`:span;
+ document.getElementById('cu2').textContent=span;
+ document.getElementById('ct1').textContent=selCat==='Traffic'?'Passengers':selCat;
+ chart(c1,overlayList(s=>selCat==='Traffic'?pax(s):series(s,selCat)));
+ chart(c2,overlayList(s=>totals(s).eb));
+ const s=st(),t=totals(s),naps=axisSum(s,'Non-aero').map((v,i)=>v/t.p[i]);
+ const evOut=Object.entries(s.cats).filter(([c])=>inScope(c)).flatMap(([c,k])=>k.events.filter(e=>+e.y<Y0||+e.y>=Y0+N).map(()=>c));
+ const nman=Object.entries(s.cats).filter(([c])=>inScope(c)).reduce((a,[,k])=>a+Object.keys(k.manual).length,0);
+ const ch=[["Non-aero per pax vs ACI/history band",naps[5]>=4&&naps[5]<=40?'ok':'watch'],
+  ["Elasticities within history 0.9-1.1 (non-aero)",Object.entries(s.cats).every(([c,k])=>!inScope(c)||k.axis!=='Non-aero'||!PROFILES[c].levers.includes('el')||(k.el>=0.9&&k.el<=1.1))?'ok':'watch'],
+  ["EBITDA margin inside 25-75%",(t.eb[9]/t.rev[9])>=0.25&&(t.eb[9]/t.rev[9])<=0.75?'ok':'watch'],
+  ["Per-sqm levers have sqm allocated",Object.entries(s.cats).every(([c,k])=>!inScope(c)||!k.sqmRate||k.sqm>0)?'ok':'err'],
+  ["Events inside the model term"+(evOut.length?` (${[...new Set(evOut)].join(', ')})`:''),evOut.length?'err':'ok'],
+  [`Manual grid cells flagged at cell level (${nman} across all lines)`,nman?'watch':'ok'],
+  ["Axis totals = sum of categories (by construction)",'ok']];
+ if(ORPHANS.length)ch.push(["Vendor lines with no tier-1 lever, retained at vendor grain ("+ORPHANS.length+")",'watch']);
+ document.getElementById('checks').innerHTML=ch.map(x=>`<li class="${x[1]}">${x[0]}</li>`).join('');
+ document.getElementById('cases').innerHTML=cases.map(x=>`<div class="${x.id===active?'active':''}" onclick="active=${x.id};render()"><b>${x.name}</b>${x.banked?' [banked]':''}<div class="lineage">${x.parent?('from '+cases.find(p=>p.id===x.parent).name+' | deltas: '+(x.deltas.join(', ')||'none yet')):'root case'}</div></div>`).join('');
+ document.getElementById('scopenote').textContent=VENDOR_INGESTED?`Line scope from the confirmed vendor chart of accounts: ${SCOPE.size} line(s) shown.`+(ORPHANS.length?` ${ORPHANS.length} vendor line(s) retained at vendor grain: ${ORPHANS.join('; ')}.`:''):"Avia standard line set (no vendor model ingested).";
+ document.getElementById('termIn').value=N;document.getElementById('y0lbl').textContent=Y0;}
+function bank(){const c=cs();c.banked=true;toast("Case banked: immutable in the live tool; branch to continue editing.");render();}
+function branch(){const p=cs();const id=Math.max(...cases.map(x=>x.id))+1;
+ cases.push({id,name:"Variant "+id,banked:false,parent:p.id,deltas:[],state:JSON.parse(JSON.stringify(p.state)),unrevFrom:p.unrevFrom});active=id;toast("Variant created from "+p.name+". Its delta list records every lever, grid and event change.");render();}
+function applyTerm(){const n=parseInt(document.getElementById('termIn').value);if(!n||n<5||n>60)return;
+ if(n>N){cs().unrevFrom=Y0+N;toast(`Term extended to ${n} years. Lever-generated cells extend by their rules; manual cells are preserved (year-keyed); the new years are flagged unreviewed until touched. Valuation entry and exit years revalidate against the term.`);}
+ else if(n<N){const cut=Object.entries(st().cats).filter(([c,k])=>inScope(c)&&k.events.some(e=>+e.y>=Y0+n));
+  if(cut.length&&!confirm(`Shortening to ${n} years leaves events beyond the horizon on: ${cut.map(x=>x[0]).join(", ")}. They stay on the list and the coherence panel will flag them. Continue?`))return;
+  toast(`Term shortened to ${n} years. Manual cells beyond the horizon are preserved in state (year-keyed) and return if the term is extended again.`);}
+ N=n;render();}
+/* Setup interview (spec 10 4c question set; every question skippable; skip-all path) */
+const QS=[
+ {id:"size",label:"Airport size and region",opts:["Under 1m pax, Europe","1-5m pax, Europe","5-15m pax, Europe","15m+ or hub","Other region"],why:"selects default assumption values from the 25-year distributions for that airport class (placeholder scaling in this mockup)"},
+ {id:"regime",label:"Ownership / regulatory regime",opts:["Concession","Regulated single till","Regulated dual till","Freehold private"],why:"selects the aero grammar defaults: charge control periods behave like contract renewals"},
+ {id:"stage",label:"Engagement stage",opts:["Pre-DD red flag","DD","Business plan","Lenders review"],why:"selects the granularity tier: pre-DD = tier 1 line set, DD = tier 2 (line_sets.tsv)"},
+ {id:"carrier",label:"Carrier mix",opts:["LCC-led","Mixed","FSC/hub","Cargo-relevant"],why:"selects traffic segmentation and which aero lines matter"},
+ {id:"capex",label:"Committed capex or space?",opts:["Yes, committed programme","No, derive from traffic"],why:"yes = typed space events; no = capacity provision engine proposes events (WS6)"},
+ {id:"conc",label:"Concession structure",opts:["Few master concessions","Many direct contracts"],why:"few = fewer, larger renewal events; many = per-line event lists"},
+ {id:"horizon",label:"Horizon and valuation layer",opts:["25 years, EBITDA only","25 years, unlevered returns","30+ years, full financing","Concession term (type after)"],why:"sets the model term (default 25, any horizon accepted; TAS v9 ran 43 years) and the below-EBITDA flag"}];
+function drawInterview(){document.getElementById('qs').innerHTML=QS.map(q=>
+ `<div class="q"><span class="skip" onclick="this.parentNode.style.opacity=.45;delete window.__ans['${q.id}']">skip</span><label>${q.label}</label><select onchange="window.__ans['${q.id}']=this.value">${q.opts.map(o=>`<option>${o}</option>`).join('')}</select><div class="why">${q.why}</div></div>`).join('');
+ window.__ans={};QS.forEach(q=>window.__ans[q.id]=q.opts[0]);}
+function finishInterview(skipAll){
+ const a=skipAll?{}:window.__ans;interviewAns=a;
+ let f=1,term=25;
+ if(a.size==="5-15m pax, Europe")f=1.15; if(a.size==="15m+ or hub")f=1.3; if(a.size==="Under 1m pax, Europe")f=0.85;
+ if(a.horizon&&a.horizon.startsWith("30+"))term=32;
+ N=term;
+ cases=[{id:1,name:"Base",banked:true,parent:null,deltas:[],state:defState(f)}];active=1;
+ selCat=firstScopeCat();
+ MGMT=VENDOR_INGESTED?buildMgmt():null;
+ const notes=[];
+ if(!skipAll){notes.push(a.stage==="DD"?"tier 2 line set selected (DD-grade)":"tier 1 line set selected");
+  notes.push(a.capex==="No, derive from traffic"?"provision engine ON: space events will arrive as proposed rows":"typed space events expected");
+  notes.push("defaults scaled for class: "+(a.size||"default"));}
+ showStage("studio");
+ toast(skipAll?"Skipped all: defaults, tier 1, 25-year term. Everything editable.":"Starter model assembled: "+notes.join("; ")+". The interview only chose starting points; every value is visible and editable in the tree and grid.");}
+/* T1 export (schema 11): the active case written as the real ingestion tables, filtered to the confirmed scope. */
+function buildT1Export(){
+ const s=st(),p=pax(s),src="Studio export, case '"+cs().name+"'";
+ const rows=[],skipped=[];
+ const T=(c,g,y,v,u,tmp,d,sd,sv,rp,so)=>rows.push([c,g,"1",y,v,u,tmp,d,sd||"",sv||"",rp||"",so].join("\t"));
+ const brg="Studio export, working assumption pending engine pack (T4)";
+ T("pax_dom","total",Y0,(0.2*p[0]).toFixed(4),"m pax","forecast","level","","","",brg);
+ T("pax_intl","total",Y0,(0.8*p[0]).toFixed(4),"m pax","forecast","level","","","",brg);
+ T("pax_dom","total","ALL",s.traffic.g,"growth","forecast","overlay","","","",brg);
+ T("pax_intl","total","ALL",s.traffic.g,"growth","forecast","overlay","","","",brg);
+ const atms={atm_dom:12,atm_intl:34,atm_cargo:2,atm_other:1.5};
+ for(const a in atms){T(a,"total",Y0,(atms[a]*p[0]/5.5).toFixed(3),"k ATMs","forecast","level","","","",brg);
+  if(a!=="atm_other")T(a,"total","ALL",s.traffic.g,"growth","forecast","overlay","","","",brg);}
+ for(const c in CODE){
+  if(!inScope(c))continue;
+  const [code,seg,kind]=CODE[c],k=s.cats[c],P=PROFILES[c],ser=series(s,c);
+  if(kind==="aero"){
+   T(code,seg,Y0,k.perpax,"EUR real","forecast","per_pax","","","",src);
+   for(const e of k.events)T(code,seg,"ALL","0","x","forecast","one_off_step",e.y,e.v,"",src+"; "+(e.note||"regulatory reset"));
+   if(Object.keys(k.manual).length)skipped.push(c+": manual cells on aero lines need rate back-solve (tier 2)");
+  }else{
+   T(code,seg,Y0,ser[0].toFixed(4),"EUR m","forecast","level","","","",src);
+   if(P.levers.includes("el"))T(code,seg,"ALL",k.el,"x","forecast","elasticity_pax","","","",src);
+   if(P.levers.includes("elsqm"))T(code,seg,"ALL",k.elsqm,"x","forecast","elasticity_sqm","","","",src);
+   if(kind==="na")for(const e of k.events)T(code,seg,"ALL","0","x","forecast","one_off_step",e.y,e.v,"",src+"; "+(e.note||"event"));
+   if(kind==="op")for(const e of k.events)T(code,seg,"ALL","0","x","forecast","one_off_step",e.y,e.v,"",src+"; "+(e.note||"step event"));
+   for(const yr in k.manual){if(+yr!==Y0)T(code,seg,yr,k.manual[yr],"EUR m","forecast","level","","","",src+"; manual grid cell");}
+  }}
+ for(const o of ORPHANS)skipped.push(o+": confirmed vendor line with no tier-1 lever, retained at vendor grain");
+ const head="# T1 assumptions exported from Forecast Studio | "+new Date().toISOString().slice(0,10)+"\n"
+  +"# metric_code\tsegment\tcase_id\tyear\tvalue\tunit\ttemporality\tdriver_type\tstep_date\tstep_value\trepeat_years\tsource\n"
+  +(skipped.length?"# not expressible at tier 1, review: "+skipped.join(" | ")+"\n":"");
+ const hdr="# project header exported from Forecast Studio\nkey\tvalue\nproject_name\tStudio Export Demo\n"
+  +"last_actual_year\t"+(Y0-1)+"\nmodel_term_years\t"+N+"\nstart_year\t"+Y0+"\n";
+ const act="# T1 actuals: none in Studio ingest (engine pack and dataroom supply actuals)\n"
+  +"# metric_code\tsegment\tcase_id\tyear\tvalue\tunit\ttemporality\tdriver_type\tstep_date\tstep_value\trepeat_years\tsource\n";
+ return {t1:head+rows.join("\n")+"\n",header:hdr,actuals:act,skipped};
+}
+/* Traffic variants and the variation note (decision note 14: the round trip) */
+function branchTraffic(){const p=cs();const id=Math.max(...cases.map(x=>x.id))+1;
+ cases.push({id,name:"Traffic variant "+id,banked:false,parent:p.id,deltas:["Traffic.dpp"],
+  trafficVariant:true,state:JSON.parse(JSON.stringify(p.state)),unrevFrom:p.unrevFrom});
+ active=id;selCat='Traffic';
+ toast("Traffic variant created on the locked base. Its deltas are confined to the Traffic axis; everything else inherits from "+p.name+".");render();}
+function setTrafficDelta(v){st().traffic.dpp=parseFloat(v);const el=document.getElementById('v_dpp');if(el)el.textContent=v;render(false);}
+function buildVariationNote(){
+ const c=cs(),parent=cases.find(x=>x.id===c.parent)||cases.find(x=>x.banked);
+ const bs=parent.state,vs=c.state;
+ const bp=pax(bs),vp=pax(vs),be=totals(bs).eb,ve=totals(vs).eb;
+ const yrs=[0,Math.round((N-1)/3),Math.round(2*(N-1)/3),N-1];
+ let rows="";
+ for(const i of [...new Set(yrs)]){
+  rows+=`<tr><td>${Y0+i}F</td><td>${bp[i].toFixed(2)}</td><td>${vp[i].toFixed(2)}</td><td>${((vp[i]/bp[i]-1)*100).toFixed(1)}%</td><td>${be[i].toFixed(1)}</td><td>${ve[i].toFixed(1)}</td><td>${(ve[i]-be[i]).toFixed(1)}</td></tr>`;}
+ const cum=(a)=>a.reduce((s,x)=>s+x,0);
+ const today=new Date().toISOString().slice(0,10);
+ return `<!DOCTYPE html><html lang="en-GB"><head><meta charset="utf-8"><title>Traffic variation note, ${c.name}, ${today}</title>
+<style>body{font-family:Arial,sans-serif;font-size:12px;color:#1a2733;max-width:720px;margin:24px auto}
+h1{font-size:16px;text-align:center}h2{font-size:12px;color:#156082}
+table{border-collapse:collapse;width:100%;margin:10px 0}th,td{border:1px solid #d7dee5;padding:4px 8px;text-align:right;font-size:11px}
+th{background:#e8f0f6}td:first-child,th:first-child{text-align:left}.src{font-size:9px;color:#5b6b7a}.meta{font-size:11px;color:#5b6b7a}</style></head><body>
+<h1>Traffic variation note: for the forecaster to consider</h1>
+<p class="meta">From the financial model, ${today}. Variant "${c.name}" on locked base "${parent.name}" (pack: ${vs.traffic.pack}). Growth delta ${(vs.traffic.dpp||0).toFixed(1)} percentage points on the engine base. This is a model-side variation, not a forecast.</p>
+<p class="meta">Rationale: ${vs.traffic.vnote||"none stated"}</p>
+<h2>Series and financial consequence [m pax; EUR m], ${Y0}-${Y0+N-1}, forecast</h2>
+<table><tr><th>Year</th><th>Base pax</th><th>Variant pax</th><th>Pax delta</th><th>Base EBITDA</th><th>Variant EBITDA</th><th>EBITDA delta</th></tr>${rows}</table>
+<p>Cumulative EBITDA over the term: base ${cum(be).toFixed(0)} EUR m, variant ${cum(ve).toFixed(0)} EUR m, difference ${(cum(ve)-cum(be)).toFixed(0)} EUR m. The generated workbook adds the returns consequence (equity IRR, MOIC) on the same variant.</p>
+<p class="src">Source: Forecast Studio, illustrative demo state; AviaSolutions analysis. Copyright Avia Solutions Limited. All rights reserved.</p>
+</body></html>`;}
+function exportVariationNote(){download('traffic_variation_note.html',buildVariationNote());
+ toast("Variation note exported: the varied series against the locked base with the EBITDA consequence, addressed back to the forecaster and the Cockpit.");}
+function download(name,text){const a=document.createElement('a');
+ a.href=URL.createObjectURL(new Blob([text],{type:'text/tab-separated-values'}));
+ a.download=name;a.click();URL.revokeObjectURL(a.href);}
+function exportT1(){const e=buildT1Export();
+ download('t1_assumptions_studio.tsv',e.t1);download('project_header_studio.tsv',e.header);
+ download('t1_actuals_studio.tsv',e.actuals);
+ toast('Exported T1, header and actuals stub. Build with: python3 build_model.py <workdir> project_header_studio.tsv t1_assumptions_studio.tsv t1_actuals_studio.tsv out.xlsx'+(e.skipped.length?' | Review export comments: '+e.skipped.length+' item(s) not expressible at tier 1.':''));}
+function toast(m){const t=document.getElementById('toastEl');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',7000);}
+
+/* ============================ BOOT ============================ */
+cases=[{id:1,name:"Base",banked:true,parent:null,deltas:[],state:defState(1)}];
+showStage("ingest");
+</script>
+</body>
+</html>

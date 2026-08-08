@@ -1,0 +1,7 @@
+# T1 traffic actuals for aero rate calibration | Osprey demo | illustrative working assumption
+# Stands in for the Sabre/OAG traffic actuals that a real ingest pairs with the vendor P&L.
+# metric_code	segment	case_id	year	value	unit	temporality	driver_type	step_date	step_value	repeat_years	source
+pax_total	total	1	2022	5.0	m pax	actual	level				Sabre/OAG demo, illustrative working assumption
+pax_total	total	1	2023	5.5	m pax	actual	level				Sabre/OAG demo, illustrative working assumption
+atm_total	total	1	2022	48	k ATMs	actual	level				Sabre/OAG demo, illustrative working assumption
+atm_total	total	1	2023	52	k ATMs	actual	level				Sabre/OAG demo, illustrative working assumption

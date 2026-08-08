@@ -1,0 +1,38 @@
+# T1 macro rows for Bulgaria | assembled 16 July 2026 by macro_feed.py
+# Segment carries the source; the 'basket' segment is the Avia weighted mean with weights and membership named per row. Point the specs at the live estate files (E:\Avia\Data, Egnyte 02 Knowledge) when mounted; demo runs use illustrative copies.
+# metric_code	segment	case_id	year	value	unit	temporality	driver_type	step_date	step_value	repeat_years	source
+gdp_growth	imf_weo	1	2024	2.3	growth	forecast	level				IMF WEO, Apr 2026, 'Bulgaria', weo_demo.xlsx
+gdp_growth	imf_weo	1	2025	2.6	growth	forecast	level				IMF WEO, Apr 2026, 'Bulgaria', weo_demo.xlsx
+gdp_growth	imf_weo	1	2026	2.8	growth	forecast	level				IMF WEO, Apr 2026, 'Bulgaria', weo_demo.xlsx
+gdp_growth	imf_weo	1	2027	2.7	growth	forecast	level				IMF WEO, Apr 2026, 'Bulgaria', weo_demo.xlsx
+gdp_growth	imf_weo	1	2028	2.6	growth	forecast	level				IMF WEO, Apr 2026, 'Bulgaria', weo_demo.xlsx
+gdp_growth	imf_weo	1	2029	2.5	growth	forecast	level				IMF WEO, Apr 2026, 'Bulgaria', weo_demo.xlsx
+gdp_growth	imf_weo	1	2030	2.5	growth	forecast	level				IMF WEO, Apr 2026, 'Bulgaria', weo_demo.xlsx
+gdp_growth	oxford_economics	1	2024	2.1	growth	forecast	level				Oxford Economics, Jun 2026, 'Bulgaria', oef_demo.xlsx
+gdp_growth	oxford_economics	1	2025	2.4	growth	forecast	level				Oxford Economics, Jun 2026, 'Bulgaria', oef_demo.xlsx
+gdp_growth	oxford_economics	1	2026	2.9	growth	forecast	level				Oxford Economics, Jun 2026, 'Bulgaria', oef_demo.xlsx
+gdp_growth	oxford_economics	1	2027	2.9	growth	forecast	level				Oxford Economics, Jun 2026, 'Bulgaria', oef_demo.xlsx
+gdp_growth	oxford_economics	1	2028	2.8	growth	forecast	level				Oxford Economics, Jun 2026, 'Bulgaria', oef_demo.xlsx
+gdp_growth	oxford_economics	1	2029	2.7	growth	forecast	level				Oxford Economics, Jun 2026, 'Bulgaria', oef_demo.xlsx
+gdp_growth	oxford_economics	1	2030	2.6	growth	forecast	level				Oxford Economics, Jun 2026, 'Bulgaria', oef_demo.xlsx
+gdp_growth	oxford_economics	1	2031	2.5	growth	forecast	level				Oxford Economics, Jun 2026, 'Bulgaria', oef_demo.xlsx
+cpi	national_stats	1	2024	3.4	index_pct	forecast	level				National stats, 2026, 'Bulgaria', cpi_demo.xlsx
+cpi	national_stats	1	2025	3.0	index_pct	forecast	level				National stats, 2026, 'Bulgaria', cpi_demo.xlsx
+cpi	national_stats	1	2026	2.8	index_pct	forecast	level				National stats, 2026, 'Bulgaria', cpi_demo.xlsx
+cpi	national_stats	1	2027	2.6	index_pct	forecast	level				National stats, 2026, 'Bulgaria', cpi_demo.xlsx
+cpi	national_stats	1	2028	2.5	index_pct	forecast	level				National stats, 2026, 'Bulgaria', cpi_demo.xlsx
+cpi	national_stats	1	2029	2.5	index_pct	forecast	level				National stats, 2026, 'Bulgaria', cpi_demo.xlsx
+cpi	national_stats	1	2030	2.5	index_pct	forecast	level				National stats, 2026, 'Bulgaria', cpi_demo.xlsx
+construction_index	steer_cap3195_style	1	2024	4.8	index_pct	forecast	level				Steer CAP3195 style, Oct 2024, 'Bulgaria', constr_demo.xlsx
+construction_index	steer_cap3195_style	1	2025	4.1	index_pct	forecast	level				Steer CAP3195 style, Oct 2024, 'Bulgaria', constr_demo.xlsx
+construction_index	steer_cap3195_style	1	2026	3.6	index_pct	forecast	level				Steer CAP3195 style, Oct 2024, 'Bulgaria', constr_demo.xlsx
+construction_index	steer_cap3195_style	1	2027	3.3	index_pct	forecast	level				Steer CAP3195 style, Oct 2024, 'Bulgaria', constr_demo.xlsx
+construction_index	steer_cap3195_style	1	2028	3.1	index_pct	forecast	level				Steer CAP3195 style, Oct 2024, 'Bulgaria', constr_demo.xlsx
+gdp_growth	basket	1	2024	2.2	growth	forecast	level				Avia basket of 2 source(s): equal weights, members this year: IMF WEO (0.5), Oxford Economics (0.5); assembled 16 July 2026
+gdp_growth	basket	1	2025	2.5	growth	forecast	level				Avia basket of 2 source(s): equal weights, members this year: IMF WEO (0.5), Oxford Economics (0.5); assembled 16 July 2026
+gdp_growth	basket	1	2026	2.85	growth	forecast	level				Avia basket of 2 source(s): equal weights, members this year: IMF WEO (0.5), Oxford Economics (0.5); assembled 16 July 2026
+gdp_growth	basket	1	2027	2.8	growth	forecast	level				Avia basket of 2 source(s): equal weights, members this year: IMF WEO (0.5), Oxford Economics (0.5); assembled 16 July 2026
+gdp_growth	basket	1	2028	2.7	growth	forecast	level				Avia basket of 2 source(s): equal weights, members this year: IMF WEO (0.5), Oxford Economics (0.5); assembled 16 July 2026
+gdp_growth	basket	1	2029	2.6	growth	forecast	level				Avia basket of 2 source(s): equal weights, members this year: IMF WEO (0.5), Oxford Economics (0.5); assembled 16 July 2026
+gdp_growth	basket	1	2030	2.55	growth	forecast	level				Avia basket of 2 source(s): equal weights, members this year: IMF WEO (0.5), Oxford Economics (0.5); assembled 16 July 2026
+gdp_growth	basket	1	2031	2.5	growth	forecast	level				Avia basket of 1 source(s): equal weights, members this year: Oxford Economics (1.0); assembled 16 July 2026

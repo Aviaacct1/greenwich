@@ -1,0 +1,38 @@
+# T6 project_lines DEFAULT (schema 11 v1.1): the Avia standard line set, loaded when no vendor model is ingested.
+# Generated from line_sets.tsv tier 1. Source: line_sets.tsv, 16 July 2026 vintage.
+# line_id	label	parent_line_id	taxonomy_codes	forecast_grain	origin
+A001	Passengers - domestic	-	pax_dom:1.0:Avia standard line	this_line	avia_standard
+A002	Passengers - international	-	pax_intl:1.0:Avia standard line	this_line	avia_standard
+A003	ATMs - domestic	-	atm_dom:1.0:Avia standard line	this_line	avia_standard
+A004	ATMs - international	-	atm_intl:1.0:Avia standard line	this_line	avia_standard
+A005	ATMs - cargo	-	atm_cargo:1.0:Avia standard line	this_line	avia_standard
+A006	ATMs - other	-	atm_other:1.0:Avia standard line	this_line	avia_standard
+A007	Passenger service charge	-	rev_psc:1.0:Avia standard line	this_line	avia_standard
+A008	Landing fee - domestic (dom)	-	rev_landing:1.0:Avia standard line	this_line	avia_standard
+A009	Landing fee - international (intl)	-	rev_landing:1.0:Avia standard line	this_line	avia_standard
+A010	Landing fee - cargo (cargo)	-	rev_landing:1.0:Avia standard line	this_line	avia_standard
+A011	Security charge	-	rev_security:1.0:Avia standard line	this_line	avia_standard
+A012	Aircraft parking charge	-	rev_acft_parking:1.0:Avia standard line	this_line	avia_standard
+A013	Night-time surcharge	-	rev_night_surcharge:1.0:Avia standard line	this_line	avia_standard
+A014	Terminal fee	-	rev_terminal_fee:1.0:Avia standard line	this_line	avia_standard
+A015	CUTE / IT charge	-	rev_cute:1.0:Avia standard line	this_line	avia_standard
+A016	PBB / airbridge charge	-	rev_pbb:1.0:Avia standard line	this_line	avia_standard
+A017	Other aeronautical	-	rev_aero_other:1.0:Avia standard line	this_line	avia_standard
+A018	Duty free	-	conc_dutyfree:1.0:Avia standard line	this_line	avia_standard
+A019	Specialty retail	-	conc_retail:1.0:Avia standard line	this_line	avia_standard
+A020	Food & beverage	-	conc_fb:1.0:Avia standard line	this_line	avia_standard
+A021	Advertising	-	rev_advertising:1.0:Avia standard line	this_line	avia_standard
+A022	Car parking	-	rev_carpark:1.0:Avia standard line	this_line	avia_standard
+A023	Car rental	-	rev_carrental:1.0:Avia standard line	this_line	avia_standard
+A024	Lounge	-	rev_lounge:1.0:Avia standard line	this_line	avia_standard
+A025	Property rental	-	rev_property:1.0:Avia standard line	this_line	avia_standard
+A026	Fuel throughput	-	rev_fuel_throughput:1.0:Avia standard line	this_line	avia_standard
+A027	Other non-aero	-	rev_nonaero_other:1.0:Avia standard line	this_line	avia_standard
+A028	Staff costs	-	staff_costs:1.0:Avia standard line	this_line	avia_standard
+A029	Utilities	-	opex_utilities:1.0:Avia standard line	this_line	avia_standard
+A030	Repairs and maintenance	-	opex_rm:1.0:Avia standard line	this_line	avia_standard
+A031	Insurance	-	opex_insurance:1.0:Avia standard line	this_line	avia_standard
+A032	Rent and rates	-	opex_rent:1.0:Avia standard line	this_line	avia_standard
+A033	Marketing	-	opex_marketing:1.0:Avia standard line	this_line	avia_standard
+A034	Cleaning	-	opex_cleaning:1.0:Avia standard line	this_line	avia_standard
+A035	Other opex	-	opex_other:1.0:Avia standard line	this_line	avia_standard

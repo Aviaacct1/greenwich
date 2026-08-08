@@ -1,0 +1,58 @@
+# Greenwich .gitignore. Written before the first git add, never after.
+#
+# The rule this file enforces: code and configuration are in the repo, data and results are
+# not. An ignored file is a file that exists on one machine only, which is the fault the repo
+# exists to end, so anything ignored here must have a home on the data root instead. That
+# home is E:\Avia\greenwich, resolved by config.py from AVIA_LOCAL_CACHE.
+
+# --- Python ---------------------------------------------------------------------
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# --- workbooks: every one of them is either an input or an output, never source ----
+# Client and reference models (Plovdiv, Project East, TNGHIA, Scanner, TAS, the Space
+# Facilities model) moved to E:\Avia\greenwich\reference on 8 August 2026, hash-verified.
+# Client-confidential material must never enter a code repository.
+*.xlsx
+*.xlsm
+*.xls
+*.xlsb
+
+# --- generated model output -------------------------------------------------------
+# The 18 skeleton and demo workbooks built between 15 and 17 July are on the data root at
+# E:\Avia\greenwich\outputs_18Jul. A build writes to config.output_dir().
+chain_tmp/
+outputs/
+
+# --- charts and documents produced by a run ----------------------------------------
+*.png
+*.pdf
+*.pptx
+*.docx
+
+# --- machine-local and scratch ------------------------------------------------------
+oracle_state.json
+~$*
+*.tmp
+.write_test*
+
+# --- secrets: never committed --------------------------------------------------------
+# Greenwich reads no credential today. The entries stand so that the first one added has
+# nowhere to go by accident, per point 4 of the tool standard.
+secrets.py
+secrets.json
+*_key.txt
+*_password.txt
+.env
+
+# --- NOT ignored, deliberately, so each decision is visible --------------------------
+#   selftest_fixtures/   the pinned inputs the 18 assertions run against. Small, and the
+#                        suite is worthless without them. Tracked.
+#   ingest_demo/         the vendor ingest demo tables. Inputs, not outputs. Tracked.
+#   *.tsv                the 15 model tables, including t4_engine_pack.tsv which is empty
+#                        by design and stays empty until pack2t1 exists. Tracked.
+#   frontend/            forecast_studio.html, the Studio front end. Source. Tracked.
+#   attic/               superseded modules, committed with a reason each. A committed
+#                        attic is a record; a deletion is a loss.

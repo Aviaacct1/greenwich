@@ -1,0 +1,26 @@
+# T1 Avia-grain actual rows (high-confidence one-to-one maps only) from vendor ingest | source: vendor_teaser_demo.xlsx | 16 July 2026
+# metric_code	segment	case_id	year	value	unit	temporality	driver_type	step_date	step_value	repeat_years	source
+conc_fb	total	1	2022	3.1	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 10 via V006
+conc_fb	total	1	2023	3.4	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 10 via V006
+rev_carpark	total	1	2022	4.1	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 11 via V007
+rev_carpark	total	1	2023	4.5	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 11 via V007
+rev_property	total	1	2022	5.2	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 12 via V008
+rev_property	total	1	2023	5.5	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 12 via V008
+rev_advertising	total	1	2022	0.8	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 13 via V009
+rev_advertising	total	1	2023	0.9	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 13 via V009
+rev_nonaero_other	total	1	2022	1.4	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 14 via V010
+rev_nonaero_other	total	1	2023	1.5	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 14 via V010
+staff_costs	total	1	2022	20.1	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 17 via V011; sign normalised (vendor costs negative)
+staff_costs	total	1	2023	21.2	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 17 via V011; sign normalised (vendor costs negative)
+opex_utilities	total	1	2022	4.2	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 18 via V012; sign normalised (vendor costs negative)
+opex_utilities	total	1	2023	4.4	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 18 via V012; sign normalised (vendor costs negative)
+opex_rm	total	1	2022	3.5	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 19 via V013; sign normalised (vendor costs negative)
+opex_rm	total	1	2023	3.7	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 19 via V013; sign normalised (vendor costs negative)
+opex_insurance	total	1	2022	1.1	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 20 via V014; sign normalised (vendor costs negative)
+opex_insurance	total	1	2023	1.2	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 20 via V014; sign normalised (vendor costs negative)
+opex_marketing	total	1	2022	0.7	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 21 via V015; sign normalised (vendor costs negative)
+opex_marketing	total	1	2023	0.8	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 21 via V015; sign normalised (vendor costs negative)
+opex_cleaning	total	1	2022	1.5	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 22 via V016; sign normalised (vendor costs negative)
+opex_cleaning	total	1	2023	1.6	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 22 via V016; sign normalised (vendor costs negative)
+opex_other	total	1	2022	2.2	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 24 via V018; sign normalised (vendor costs negative)
+opex_other	total	1	2023	2.3	EUR m	actual	level				vendor_teaser_demo.xlsx, sheet P&L Summary, row 24 via V018; sign normalised (vendor costs negative)

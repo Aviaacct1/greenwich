@@ -1,0 +1,54 @@
+# line_sets v1 (blueprint 06 section 8 consequence 1: granularity is a configuration tier, not a fork) | 16 July 2026
+# tier: 1 = in both tiers (pre-DD, Plovdiv line set); 2 = DD-grade additions/replacements (TAS v9 pattern, segments
+# generalised per blueprint section 5 deviation 2: carrier-type x dom/intl, airline names as labels only).
+# replaces: at tier 2, a tier-1 line whose metric_code+segment is superseded by split lines is listed here.
+# calc_group: which calc sheet the line lands on at tier 2 (tier 1 uses one sheet per axis).
+# Sources: tier 1 = generate_skeleton_v0.py line lists (verbatim); tier 2 = TAS v9 Control and calc-sheet
+# structure read 16 July 2026, generalised; SPV cost line from v9 Opex - SPV Costs sheet.
+# tier	axis	label	metric_code	segment	unit	driver	calc_group	replaces
+1	Traffic	Passengers - domestic	pax_dom	total	[m pax]	-	Traffic	-
+1	Traffic	Passengers - international	pax_intl	total	[m pax]	-	Traffic	-
+1	Traffic	ATMs - domestic	atm_dom	total	[k ATMs]	-	Traffic	-
+1	Traffic	ATMs - international	atm_intl	total	[k ATMs]	-	Traffic	-
+1	Traffic	ATMs - cargo	atm_cargo	total	[k ATMs]	-	Traffic	-
+1	Traffic	ATMs - other	atm_other	total	[k ATMs]	-	Traffic	-
+1	Aero	Passenger service charge	rev_psc	total	[EUR real]	pax_total	Aero	-
+1	Aero	Landing fee - domestic	rev_landing	dom	[EUR real]	atm_dom	Aero	-
+1	Aero	Landing fee - international	rev_landing	intl	[EUR real]	atm_intl	Aero	-
+1	Aero	Landing fee - cargo	rev_landing	cargo	[EUR real]	atm_cargo	Aero	-
+1	Aero	Security charge	rev_security	total	[EUR real]	pax_total	Aero	-
+1	Aero	Aircraft parking charge	rev_acft_parking	total	[EUR real]	atm_total	Aero	-
+1	Aero	Night-time surcharge	rev_night_surcharge	total	[EUR real]	atm_total	Aero	-
+1	Aero	Terminal fee	rev_terminal_fee	total	[EUR real]	pax_total	Aero	-
+1	Aero	CUTE / IT charge	rev_cute	total	[EUR real]	pax_total	Aero	-
+1	Aero	PBB / airbridge charge	rev_pbb	total	[EUR real]	atm_total	Aero	-
+1	Aero	Other aeronautical	rev_aero_other	total	[EUR real]	pax_total	Aero	-
+2	Aero	Passenger service charge - domestic	rev_psc	dom	[EUR real]	pax_dom	Aero	rev_psc/total
+2	Aero	Passenger service charge - international	rev_psc	intl	[EUR real]	pax_intl	Aero	rev_psc/total
+2	Aero	Security charge - passengers domestic	rev_security	pax_dom	[EUR real]	pax_dom	Aero	rev_security/total
+2	Aero	Security charge - passengers international	rev_security	pax_intl	[EUR real]	pax_intl	Aero	rev_security/total
+2	Aero	Security charge - cargo	rev_security	cargo	[EUR real]	atm_cargo	Aero	rev_security/total
+2	Aero	Terminal fee - domestic	rev_terminal_fee	dom	[EUR real]	pax_dom	Aero	rev_terminal_fee/total
+2	Aero	Terminal fee - international	rev_terminal_fee	intl	[EUR real]	pax_intl	Aero	rev_terminal_fee/total
+2	Aero	CUTE / IT charge - domestic	rev_cute	dom	[EUR real]	pax_dom	Aero	rev_cute/total
+2	Aero	CUTE / IT charge - international	rev_cute	intl	[EUR real]	pax_intl	Aero	rev_cute/total
+2	Aero	Baggage handling fee	rev_baggage	total	[EUR real]	atm_total	Aero	-
+1	Non-aero	Duty free	conc_dutyfree	total	[EUR m]	-	Non Aero - Concessions	-
+1	Non-aero	Specialty retail	conc_retail	total	[EUR m]	-	Non Aero - Concessions	-
+1	Non-aero	Food & beverage	conc_fb	total	[EUR m]	-	Non Aero - Concessions	-
+1	Non-aero	Advertising	rev_advertising	total	[EUR m]	-	Non Aero - Concessions	-
+1	Non-aero	Car parking	rev_carpark	total	[EUR m]	-	Non Aero - Travel Services	-
+1	Non-aero	Car rental	rev_carrental	total	[EUR m]	-	Non Aero - Travel Services	-
+1	Non-aero	Lounge	rev_lounge	total	[EUR m]	-	Non Aero - Travel Services	-
+1	Non-aero	Property rental	rev_property	total	[EUR m]	-	Non Aero - Real Estate	-
+1	Non-aero	Fuel throughput	rev_fuel_throughput	total	[EUR m]	-	Non Aero - Other	-
+1	Non-aero	Other non-aero	rev_nonaero_other	total	[EUR m]	-	Non Aero - Other	-
+1	Opex	Staff costs	staff_costs	total	[EUR m]	-	Opex - Staff Costs	-
+1	Opex	Utilities	opex_utilities	total	[EUR m]	-	Opex - Other Costs	-
+1	Opex	Repairs and maintenance	opex_rm	total	[EUR m]	-	Opex - Other Costs	-
+1	Opex	Insurance	opex_insurance	total	[EUR m]	-	Opex - Other Costs	-
+1	Opex	Rent and rates	opex_rent	total	[EUR m]	-	Opex - Other Costs	-
+1	Opex	Marketing	opex_marketing	total	[EUR m]	-	Opex - Other Costs	-
+1	Opex	Cleaning	opex_cleaning	total	[EUR m]	-	Opex - Other Costs	-
+1	Opex	Other opex	opex_other	total	[EUR m]	-	Opex - Other Costs	-
+2	Opex	SPV / corporate costs	opex_spv	total	[EUR m]	-	Opex - SPV Costs	-

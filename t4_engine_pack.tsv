@@ -1,0 +1,4 @@
+# T4 engine_pack register (schema 11): one row per traffic pack consumed | template, no rows yet | 16 July 2026
+# Canonical feed = Cockpit output once consistent (decision note 14); until then the Studio bridge is the
+# labelled interim and this register stays empty. pack2t1 will refuse a schema_version it does not know.
+# pack_id	path	engine_version	cockpit_version	schema_version	airport	scenario_id	retrieved	licence_note	fed_case_ids

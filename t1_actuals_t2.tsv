@@ -1,0 +1,86 @@
+# T1 actuals, tier-2 demo | 16 July 2026
+# metric_code	segment	case_id	year	value	unit	temporality	driver_type	step_date	step_value	repeat_years	source
+pax_dom	total	1	2022	1.05	m pax	actual	level				demo actuals, illustrative
+pax_dom	total	1	2023	1.14	m pax	actual	level				demo actuals, illustrative
+pax_intl	total	1	2022	3.6	m pax	actual	level				demo actuals, illustrative
+pax_intl	total	1	2023	4.05	m pax	actual	level				demo actuals, illustrative
+conc_dutyfree	total	1	2022	5.4	EUR m	actual	level				demo actuals, illustrative
+conc_dutyfree	total	1	2023	6.1	EUR m	actual	level				demo actuals, illustrative
+rev_carpark	total	1	2022	4.1	EUR m	actual	level				demo actuals, illustrative
+rev_carpark	total	1	2023	4.5	EUR m	actual	level				demo actuals, illustrative
+staff_costs	total	1	2022	20.1	EUR m	actual	level				demo actuals, illustrative
+staff_costs	total	1	2023	21.2	EUR m	actual	level				demo actuals, illustrative
+atm_dom	total	1	2022	11.04	k ATMs	actual	level				demo actuals, illustrative
+atm_dom	total	1	2023	11.52	k ATMs	actual	level				demo actuals, illustrative
+atm_intl	total	1	2022	31.28	k ATMs	actual	level				demo actuals, illustrative
+atm_intl	total	1	2023	32.64	k ATMs	actual	level				demo actuals, illustrative
+atm_cargo	total	1	2022	1.84	k ATMs	actual	level				demo actuals, illustrative
+atm_cargo	total	1	2023	1.92	k ATMs	actual	level				demo actuals, illustrative
+atm_other	total	1	2022	1.38	k ATMs	actual	level				demo actuals, illustrative
+atm_other	total	1	2023	1.44	k ATMs	actual	level				demo actuals, illustrative
+rev_landing	dom	1	2022	2.944	EUR real	actual	level				demo actuals, illustrative
+rev_landing	dom	1	2023	3.072	EUR real	actual	level				demo actuals, illustrative
+rev_landing	intl	1	2022	3.772	EUR real	actual	level				demo actuals, illustrative
+rev_landing	intl	1	2023	3.936	EUR real	actual	level				demo actuals, illustrative
+rev_landing	cargo	1	2022	4.232	EUR real	actual	level				demo actuals, illustrative
+rev_landing	cargo	1	2023	4.416	EUR real	actual	level				demo actuals, illustrative
+rev_acft_parking	total	1	2022	0.552	EUR real	actual	level				demo actuals, illustrative
+rev_acft_parking	total	1	2023	0.576	EUR real	actual	level				demo actuals, illustrative
+rev_night_surcharge	total	1	2022	0.368	EUR real	actual	level				demo actuals, illustrative
+rev_night_surcharge	total	1	2023	0.384	EUR real	actual	level				demo actuals, illustrative
+rev_pbb	total	1	2022	0.644	EUR real	actual	level				demo actuals, illustrative
+rev_pbb	total	1	2023	0.672	EUR real	actual	level				demo actuals, illustrative
+rev_aero_other	total	1	2022	0.276	EUR real	actual	level				demo actuals, illustrative
+rev_aero_other	total	1	2023	0.288	EUR real	actual	level				demo actuals, illustrative
+conc_retail	total	1	2022	3.128	EUR m	actual	level				demo actuals, illustrative
+conc_retail	total	1	2023	3.264	EUR m	actual	level				demo actuals, illustrative
+conc_fb	total	1	2022	2.852	EUR m	actual	level				demo actuals, illustrative
+conc_fb	total	1	2023	2.976	EUR m	actual	level				demo actuals, illustrative
+rev_advertising	total	1	2022	0.828	EUR m	actual	level				demo actuals, illustrative
+rev_advertising	total	1	2023	0.864	EUR m	actual	level				demo actuals, illustrative
+rev_carrental	total	1	2022	1.288	EUR m	actual	level				demo actuals, illustrative
+rev_carrental	total	1	2023	1.344	EUR m	actual	level				demo actuals, illustrative
+rev_lounge	total	1	2022	0.736	EUR m	actual	level				demo actuals, illustrative
+rev_lounge	total	1	2023	0.768	EUR m	actual	level				demo actuals, illustrative
+rev_property	total	1	2022	5.152	EUR m	actual	level				demo actuals, illustrative
+rev_property	total	1	2023	5.376	EUR m	actual	level				demo actuals, illustrative
+rev_fuel_throughput	total	1	2022	1.38	EUR m	actual	level				demo actuals, illustrative
+rev_fuel_throughput	total	1	2023	1.44	EUR m	actual	level				demo actuals, illustrative
+rev_nonaero_other	total	1	2022	1.104	EUR m	actual	level				demo actuals, illustrative
+rev_nonaero_other	total	1	2023	1.152	EUR m	actual	level				demo actuals, illustrative
+opex_utilities	total	1	2022	4.14	EUR m	actual	level				demo actuals, illustrative
+opex_utilities	total	1	2023	4.32	EUR m	actual	level				demo actuals, illustrative
+opex_rm	total	1	2022	3.496	EUR m	actual	level				demo actuals, illustrative
+opex_rm	total	1	2023	3.648	EUR m	actual	level				demo actuals, illustrative
+opex_insurance	total	1	2022	1.104	EUR m	actual	level				demo actuals, illustrative
+opex_insurance	total	1	2023	1.152	EUR m	actual	level				demo actuals, illustrative
+opex_rent	total	1	2022	0.92	EUR m	actual	level				demo actuals, illustrative
+opex_rent	total	1	2023	0.96	EUR m	actual	level				demo actuals, illustrative
+opex_marketing	total	1	2022	0.736	EUR m	actual	level				demo actuals, illustrative
+opex_marketing	total	1	2023	0.768	EUR m	actual	level				demo actuals, illustrative
+opex_cleaning	total	1	2022	1.472	EUR m	actual	level				demo actuals, illustrative
+opex_cleaning	total	1	2023	1.536	EUR m	actual	level				demo actuals, illustrative
+opex_other	total	1	2022	2.208	EUR m	actual	level				demo actuals, illustrative
+opex_other	total	1	2023	2.304	EUR m	actual	level				demo actuals, illustrative
+rev_psc	dom	1	2022	7.82	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_psc	dom	1	2023	8.16	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_psc	intl	1	2022	7.82	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_psc	intl	1	2023	8.16	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_security	pax_dom	1	2022	1.932	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_security	pax_dom	1	2023	2.016	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_security	pax_intl	1	2022	1.932	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_security	pax_intl	1	2023	2.016	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_security	cargo	1	2022	1.932	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_security	cargo	1	2023	2.016	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_terminal_fee	dom	1	2022	1.656	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_terminal_fee	dom	1	2023	1.728	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_terminal_fee	intl	1	2022	1.656	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_terminal_fee	intl	1	2023	1.728	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_cute	dom	1	2022	0.46	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_cute	dom	1	2023	0.48	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_cute	intl	1	2022	0.46	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_cute	intl	1	2023	0.48	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_baggage	total	1	2022	0.368	EUR real	actual	level				tier-2 demo actuals, illustrative
+rev_baggage	total	1	2023	0.384	EUR real	actual	level				tier-2 demo actuals, illustrative
+opex_spv	total	1	2022	1.656	EUR m	actual	level				tier-2 demo actuals, illustrative
+opex_spv	total	1	2023	1.728	EUR m	actual	level				tier-2 demo actuals, illustrative

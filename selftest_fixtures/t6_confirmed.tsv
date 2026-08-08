@@ -1,0 +1,23 @@
+# T6 project_lines PROPOSED by vendor ingest | source: vendor_teaser_demo.xlsx | 16 July 2026
+# Unmapped lines carry '-' and BLOCK generation until the analyst maps them.
+# line_id	label	parent_line_id	taxonomy_codes	forecast_grain	origin
+V001	Passenger charges	-	rev_psc:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V002	Landing & parking fees	-	rev_landing:1.0:analyst confirmed, parking element immaterial	this_line	vendor
+V003	Security charges	-	rev_security:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V004	Other aeronautical charges	-	rev_aero_other:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V005	Retail & duty free concessions	-	conc_dutyfree:0.7:analyst judgement pending ACI card|conc_retail:0.3:analyst judgement pending ACI card	children	vendor
+V005a	Retail & duty free - duty free share	V005	conc_dutyfree:1.0:child of split	this_line	split_estimate
+V005b	Retail & duty free - retail share	V005	conc_retail:1.0:child of split	this_line	split_estimate
+V006	Food and beverage	-	conc_fb:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V007	Car park income	-	rev_carpark:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V008	Rents & property income	-	rev_property:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V009	Advertising	-	rev_advertising:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V010	Other operating income	-	rev_nonaero_other:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V011	Wages and salaries (incl. social charges)	-	staff_costs:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V012	Utilities & energy	-	opex_utilities:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V013	Repairs & maintenance	-	opex_rm:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V014	Insurance premiums	-	opex_insurance:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V015	Sales & marketing	-	opex_marketing:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V016	Cleaning & waste services	-	opex_cleaning:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor
+V017	Sundry recharges to group	-	opex_other:1.0:analyst confirmed, group recharge treated as other opex	this_line	vendor
+V018	Other operating costs	-	opex_other:1.0:auto-proposed from alias table, high confidence, CONFIRM before generation	this_line	vendor

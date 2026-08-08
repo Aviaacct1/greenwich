@@ -1,0 +1,6 @@
+# aero split fixture: a vendor line lumping PSC and security, split 0.6/0.4
+# line_id	label	parent_line_id	taxonomy_codes	forecast_grain	origin
+V900	Passenger charges combined	-	rev_psc:0.6:analyst split|rev_security:0.4:analyst split	children	vendor
+V900a	Passenger charges - psc share	V900	rev_psc:1.0:child of split	this_line	split_estimate
+V900b	Passenger charges - security share	V900	rev_security:1.0:child of split	this_line	split_estimate
+V901	Landing fees	-	rev_landing:1.0:direct	this_line	vendor

@@ -1,0 +1,16 @@
+# T6 project_lines (schema 11 v1.1) | demo vendor chart of accounts, illustrative | 16 July 2026
+# taxonomy_codes: code:share:share_basis, pipe-separated where a line splits. Shares per line sum to 1.
+# forecast_grain: this_line | children | parent. origin: vendor | avia_standard | split_estimate.
+# Demo covers both directions: V100 vendor-coarser (retail split into Avia categories via last-actual-year
+# share estimates, basis named on the parent mapping, children origin split_estimate, R108 flags until
+# confirmed); V200-V202 vendor-finer (three vendor staff lines map to one taxonomy code, forecast at Avia
+# grain, vendor detail retained for reconciliation).
+# line_id	label	parent_line_id	taxonomy_codes	forecast_grain	origin
+V100	Retail income	-	conc_dutyfree:0.50:analyst judgement, demo illustrative|conc_retail:0.30:analyst judgement, demo illustrative|conc_fb:0.20:analyst judgement, demo illustrative	children	vendor
+V101	Retail income - duty free share	V100	conc_dutyfree:1.0:child of V100 split	this_line	split_estimate
+V102	Retail income - specialty retail share	V100	conc_retail:1.0:child of V100 split	this_line	split_estimate
+V103	Retail income - food and beverage share	V100	conc_fb:1.0:child of V100 split	this_line	split_estimate
+V200	Wages	-	staff_costs:1.0:direct mapping	parent	vendor
+V201	Social charges	-	staff_costs:1.0:direct mapping	parent	vendor
+V202	Staff bonuses	-	staff_costs:1.0:direct mapping	parent	vendor
+V300	Car parking	-	rev_carpark:1.0:direct mapping	this_line	vendor

@@ -1,0 +1,61 @@
+# T1 assumptions exported from Forecast Studio | 2026-07-17
+# metric_code	segment	case_id	year	value	unit	temporality	driver_type	step_date	step_value	repeat_years	source
+pax_dom	total	1	2024	1.1000	m pax	forecast	level				Studio export, working assumption pending engine pack (T4)
+pax_intl	total	1	2024	4.4000	m pax	forecast	level				Studio export, working assumption pending engine pack (T4)
+pax_dom	total	1	ALL	0.04	growth	forecast	overlay				Studio export, working assumption pending engine pack (T4)
+pax_intl	total	1	ALL	0.04	growth	forecast	overlay				Studio export, working assumption pending engine pack (T4)
+atm_dom	total	1	2024	12.000	k ATMs	forecast	level				Studio export, working assumption pending engine pack (T4)
+atm_dom	total	1	ALL	0.04	growth	forecast	overlay				Studio export, working assumption pending engine pack (T4)
+atm_intl	total	1	2024	34.000	k ATMs	forecast	level				Studio export, working assumption pending engine pack (T4)
+atm_intl	total	1	ALL	0.04	growth	forecast	overlay				Studio export, working assumption pending engine pack (T4)
+atm_cargo	total	1	2024	2.000	k ATMs	forecast	level				Studio export, working assumption pending engine pack (T4)
+atm_cargo	total	1	ALL	0.04	growth	forecast	overlay				Studio export, working assumption pending engine pack (T4)
+atm_other	total	1	2024	1.500	k ATMs	forecast	level				Studio export, working assumption pending engine pack (T4)
+conc_dutyfree	total	1	2024	5.9950	EUR m	forecast	level				Studio export, case 'Base'
+conc_dutyfree	total	1	ALL	1	x	forecast	elasticity_pax				Studio export, case 'Base'
+conc_dutyfree	total	1	ALL	0.3	x	forecast	elasticity_sqm				Studio export, case 'Base'
+conc_dutyfree	total	1	ALL	0	x	forecast	one_off_step	2029	0.08		Studio export, case 'Base'; renewal, assumed uplift
+conc_dutyfree	total	1	ALL	0	x	forecast	one_off_step	2034	0.06		Studio export, case 'Base'; renewal, shorter cycle
+conc_dutyfree	total	1	ALL	0	x	forecast	one_off_step	2040	0.08		Studio export, case 'Base'; renewal
+conc_retail	total	1	2024	4.4000	EUR m	forecast	level				Studio export, case 'Base'
+conc_retail	total	1	ALL	1	x	forecast	elasticity_pax				Studio export, case 'Base'
+conc_retail	total	1	ALL	0.3	x	forecast	elasticity_sqm				Studio export, case 'Base'
+conc_fb	total	1	2024	3.5750	EUR m	forecast	level				Studio export, case 'Base'
+conc_fb	total	1	ALL	1	x	forecast	elasticity_pax				Studio export, case 'Base'
+conc_fb	total	1	ALL	0.3	x	forecast	elasticity_sqm				Studio export, case 'Base'
+rev_carpark	total	1	2024	5.8850	EUR m	forecast	level				Studio export, case 'Base'
+rev_carpark	total	1	ALL	1	x	forecast	elasticity_pax				Studio export, case 'Base'
+rev_carrental	total	1	2024	1.6500	EUR m	forecast	level				Studio export, case 'Base'
+rev_carrental	total	1	ALL	1	x	forecast	elasticity_pax				Studio export, case 'Base'
+rev_lounge	total	1	2024	0.8800	EUR m	forecast	level				Studio export, case 'Base'
+rev_lounge	total	1	ALL	1	x	forecast	elasticity_pax				Studio export, case 'Base'
+rev_property	total	1	2024	5.0400	EUR m	forecast	level				Studio export, case 'Base'
+rev_fuel_throughput	total	1	2024	1.5000	EUR m	forecast	level				Studio export, case 'Base'
+rev_fuel_throughput	total	1	ALL	1	x	forecast	elasticity_pax				Studio export, case 'Base'
+rev_nonaero_other	total	1	2024	1.2000	EUR m	forecast	level				Studio export, case 'Base'
+rev_nonaero_other	total	1	ALL	1	x	forecast	elasticity_pax				Studio export, case 'Base'
+rev_psc	total	1	2024	8.5	EUR real	forecast	per_pax				Studio export, case 'Base'
+rev_landing	dom	1	2024	0.7	EUR real	forecast	per_pax				Studio export, case 'Base'
+rev_landing	intl	1	2024	2.5	EUR real	forecast	per_pax				Studio export, case 'Base'
+rev_landing	cargo	1	2024	0.2	EUR real	forecast	per_pax				Studio export, case 'Base'
+rev_security	total	1	2024	2.1	EUR real	forecast	per_pax				Studio export, case 'Base'
+rev_terminal_fee	total	1	2024	1.8	EUR real	forecast	per_pax				Studio export, case 'Base'
+rev_cute	total	1	2024	0.5	EUR real	forecast	per_pax				Studio export, case 'Base'
+rev_pbb	total	1	2024	0.7	EUR real	forecast	per_pax				Studio export, case 'Base'
+rev_aero_other	total	1	2024	0	EUR real	forecast	per_pax				Studio export, case 'Base'
+staff_costs	total	1	2024	22.0000	EUR m	forecast	level				Studio export, case 'Base'
+staff_costs	total	1	ALL	0.6	x	forecast	elasticity_pax				Studio export, case 'Base'
+opex_utilities	total	1	2024	2.7000	EUR m	forecast	level				Studio export, case 'Base'
+opex_utilities	total	1	ALL	0.6	x	forecast	elasticity_pax				Studio export, case 'Base'
+opex_rm	total	1	2024	3.8000	EUR m	forecast	level				Studio export, case 'Base'
+opex_rm	total	1	ALL	0.6	x	forecast	elasticity_pax				Studio export, case 'Base'
+opex_insurance	total	1	2024	1.2000	EUR m	forecast	level				Studio export, case 'Base'
+opex_rent	total	1	2024	0.9000	EUR m	forecast	level				Studio export, case 'Base'
+opex_marketing	total	1	2024	0.8000	EUR m	forecast	level				Studio export, case 'Base'
+opex_marketing	total	1	ALL	0.6	x	forecast	elasticity_pax				Studio export, case 'Base'
+opex_cleaning	total	1	2024	1.0500	EUR m	forecast	level				Studio export, case 'Base'
+opex_cleaning	total	1	ALL	0.6	x	forecast	elasticity_pax				Studio export, case 'Base'
+opex_other	total	1	2024	2.4000	EUR m	forecast	level				Studio export, case 'Base'
+opex_other	total	1	ALL	0.6	x	forecast	elasticity_pax				Studio export, case 'Base'
+rev_psc	total	1	ALL	0	x	forecast	one_off_step	2029	0.05		Studio export; PSC regulatory reset +5%
+staff_costs	total	1	ALL	0	x	forecast	one_off_step	2030	-0.10		Studio export; staff outsourcing step -10%

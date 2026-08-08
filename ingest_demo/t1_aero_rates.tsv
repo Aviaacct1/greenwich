@@ -1,0 +1,11 @@
+# T1 aero rate rows, calibrated from ingested revenue over traffic drivers | 17 July 2026
+# rate = ingested aero revenue / matching traffic driver, same year; sources on every row.
+# metric_code	segment	case_id	year	value	unit	temporality	driver_type	step_date	step_value	repeat_years	source
+rev_aero_other	total	1	2022	0.640000	EUR per pax	actual	per_pax				calibrated: rev_aero_other revenue 3.2 EUR m (vendor_teaser_demo.xlsx, sheet P&L Summary, row 8) over pax_total 5.0 m pax (Sabre/OAG demo, illustrative working assumption); rate = revenue / driver
+rev_aero_other	total	1	2023	0.618182	EUR per pax	actual	per_pax				calibrated: rev_aero_other revenue 3.4 EUR m (vendor_teaser_demo.xlsx, sheet P&L Summary, row 8) over pax_total 5.5 m pax (Sabre/OAG demo, illustrative working assumption); rate = revenue / driver
+rev_landing	total	1	2022	258.333333	EUR per ATM	actual	per_atm				calibrated: rev_landing revenue 12.4 EUR m (vendor_teaser_demo.xlsx, sheet P&L Summary, row 6) over atm_total 48.0 k ATMs (Sabre/OAG demo, illustrative working assumption); rate = revenue / driver
+rev_landing	total	1	2023	251.923077	EUR per ATM	actual	per_atm				calibrated: rev_landing revenue 13.1 EUR m (vendor_teaser_demo.xlsx, sheet P&L Summary, row 6) over atm_total 52.0 k ATMs (Sabre/OAG demo, illustrative working assumption); rate = revenue / driver
+rev_psc	total	1	2022	7.640000	EUR per pax	actual	per_pax				calibrated: rev_psc revenue 38.2 EUR m (vendor_teaser_demo.xlsx, sheet P&L Summary, row 5) over pax_total 5.0 m pax (Sabre/OAG demo, illustrative working assumption); rate = revenue / driver
+rev_psc	total	1	2023	7.545455	EUR per pax	actual	per_pax				calibrated: rev_psc revenue 41.5 EUR m (vendor_teaser_demo.xlsx, sheet P&L Summary, row 5) over pax_total 5.5 m pax (Sabre/OAG demo, illustrative working assumption); rate = revenue / driver
+rev_security	total	1	2022	1.820000	EUR per pax	actual	per_pax				calibrated: rev_security revenue 9.1 EUR m (vendor_teaser_demo.xlsx, sheet P&L Summary, row 7) over pax_total 5.0 m pax (Sabre/OAG demo, illustrative working assumption); rate = revenue / driver
+rev_security	total	1	2023	1.781818	EUR per pax	actual	per_pax				calibrated: rev_security revenue 9.8 EUR m (vendor_teaser_demo.xlsx, sheet P&L Summary, row 7) over pax_total 5.5 m pax (Sabre/OAG demo, illustrative working assumption); rate = revenue / driver

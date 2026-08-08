@@ -1,0 +1,8 @@
+# metric_code	segment	case_id	year	value	unit	temporality	driver_type	step_date	step_value	repeat_years	source
+pax_dom	total	1	2024	1.1	m pax	forecast	level				fixture
+pax_intl	total	1	2024	4.4	m pax	forecast	level				fixture
+pax_dom	total	1	ALL	0	growth	forecast	overlay				fixture
+pax_intl	total	1	ALL	0	growth	forecast	overlay				fixture
+rev_psc	total	1	2024	7.5455	EUR real	forecast	per_pax				calibrated rate (PSC 41.5 over 5.5m pax)
+rev_landing	total	1	2024	251.9231	EUR real	forecast	per_pax				calibrated rate (landing 13.1 over 52k ATM)
+rev_security	total	1	2024	1.7818	EUR real	forecast	per_pax				calibrated rate (security 9.8 over 5.5m pax)

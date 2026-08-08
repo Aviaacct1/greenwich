@@ -1,0 +1,12 @@
+# T2 sqm_allocation (schema 11): one row per (space_category, year, case_id) | demo, illustrative | 16 July 2026
+# mode: typed (analyst) | derived (capacity provision engine WS6, rule id named). Terminal total must
+# reconcile to the Capex sheet terminal size path (checked as R203b).
+# space_category	year	case_id	sqm	mode	rule_id	source
+terminal_total	2022	1	20000	typed	-	working assumption, illustrative (Capex opening)
+terminal_total	2028	1	26000	typed	-	committed extension, working assumption (Capex additions)
+conc_dutyfree	2022	1	1200	typed	-	working assumption, illustrative
+conc_dutyfree	2028	1	1800	typed	-	extension allocation, working assumption
+conc_retail	2022	1	900	typed	-	working assumption, illustrative
+conc_retail	2028	1	1100	typed	-	extension allocation, working assumption
+conc_fb	2022	1	700	typed	-	working assumption, illustrative
+conc_fb	2028	1	900	typed	-	extension allocation, working assumption

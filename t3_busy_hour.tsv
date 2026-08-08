@@ -1,0 +1,13 @@
+# T3 busy_hour (schema 11): one row per (year, case_id, metric) | demo, illustrative | 16 July 2026
+# Sources: DDFS output file or engine pack; typed fallback allowed with source manual. Ops constants
+# (stand count, turnaround, operating window) ride in T3 as metrics so R201 has named inputs.
+# year	case_id	metric	value	source
+2022	1	busy_hour_pax	2400	manual, working assumption pending DDFS
+2028	1	busy_hour_pax	2900	manual, working assumption pending DDFS
+2022	1	atm_peak_day	150	manual, working assumption pending DDFS
+2028	1	atm_peak_day	175	manual, working assumption pending DDFS
+2022	1	stand_count	8	manual, working assumption (apron survey pending)
+2028	1	stand_count	10	manual, extension adds two stands, working assumption
+2022	1	avg_turnaround_minutes	45	DDFS template values, working assumption
+2022	1	operating_minutes_per_day	1020	17-hour operating day, working assumption
+2022	1	capex_lead_time_years	1	working assumption, design and build lag

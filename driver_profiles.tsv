@@ -1,0 +1,41 @@
+# driver_profiles v0 seed (spec 10 section 4c artefact 1) | 16 July 2026
+# One row per metric_code: which levers the Studio editor shows for that line, the default driver
+# basis, and the default elasticity form. Seeded from the TAS v8 "Suggested BPlan Driver" column
+# (tabs 3a/3b/3c Clean, read 16 July 2026) and the TAS v9 Control tab structure; to be refined by
+# the 25-year study (which driver form each past model actually used per line, by project type).
+# applicable_levers vocabulary = T1 driver_type set (schema 11). default_basis: what the unit rate
+# multiplies. pct_of: line follows a share of another line. verbatim_driver quotes v8 unedited.
+# metric_code	label	applicable_levers	default_basis	default_elasticity	event_pattern	verbatim_driver	source
+rev_psc	Passenger service charge	per_pax|one_off_step|overlay	pax_by_segment	none	regulatory reset dates	Unit charge x No. of Scheduled Departing Pax	TAS v8 3b Clean, Suggested BPlan Driver column
+rev_landing	Landing / runway ATM charge	per_pax|one_off_step|overlay	atm_by_segment_mtow	none	regulatory reset dates	Unit charge x No. of Scheduled ATMs	TAS v8 3a Clean, Suggested BPlan Driver column
+rev_security	Security charge	per_pax|one_off_step|overlay	pax_and_atm_and_tonnes	none	regulatory reset dates	Passenger: Unit charge x No. of Passengers; Cargo & Mail: Unit charge x Cargo tonnage; Aircraft: Unit charge x No. of ATMs; Airline staff: % of Passenger Security Fee	TAS v8 3a Clean, Suggested BPlan Driver column
+rev_night_surcharge	Night-time movement surcharge	overlay|one_off_step	pct_of:rev_landing	none	tariff resets	% of above [ATM Runway Charge]	TAS v8 3a Clean, Suggested BPlan Driver column
+rev_acft_parking	Aircraft parking charge	per_pax|overlay|one_off_step	pct_of:rev_landing	none	tariff resets	Excess Parking Charge: % of total ATM Runway Charge	TAS v8 3a Clean, Suggested BPlan Driver column
+rev_terminal_fee	Terminal fee	per_pax|one_off_step|overlay	pax_by_segment	none	regulatory reset dates	Airport Terminal Fee by segment (v9 Control pattern)	TAS v9 Control tab, read 16 July 2026
+rev_cute	CUTE / IT charge	per_pax|overlay|one_off_step	pct_of:rev_landing	none	contract renewal	CUTE Charges: Fixed % of ATM Runway charge	TAS v8 3a Clean, Suggested BPlan Driver column
+rev_pbb	PBB / airbridge charge	per_pax|overlay|one_off_step	atm_by_segment	none	contract renewal	PBB Charges by segment; average daily turnarounds per PBB; PBB occupancy	TAS v9 Control tab, read 16 July 2026
+rev_aero_other	Other aeronautical	level|elasticity_pax|overlay	level	low_to_pax	none	Other Aeronautical Charges (v9); PIB / met / fire: % of total ATM Runway Charge (v8)	TAS v8 3a Clean + v9 Control
+conc_dutyfree	Duty free concession	per_pax|per_sqm|elasticity_pax|elasticity_sqm|one_off_step|overlay	spend_per_pax	medium_to_pax	contract renewal cycle (irregular list)	Unit revenue per SQM per Pax X [change in SQM] and [changes in total Pax]	TAS v8 3a Clean, Suggested BPlan Driver column (commercial space rental line)
+conc_retail	Specialty retail concession	per_pax|per_sqm|elasticity_pax|elasticity_sqm|one_off_step|overlay	spend_per_sqm_per_pax	medium_to_pax	contract renewal cycle (irregular list)	Commercial space rental: Unit revenue per SQM per Pax X [change in SQM] and [changes in total Pax]	TAS v8 3a Clean, Suggested BPlan Driver column
+conc_fb	Food and beverage concession	per_pax|per_sqm|elasticity_pax|elasticity_sqm|one_off_step|overlay	spend_per_sqm_per_pax	medium_to_pax	contract renewal cycle (irregular list)	Commercial space rental pattern (v8); ACI per-pax categories (v9 ACI tab)	TAS v8 3a Clean + v9 ACI Concession Income Study tab
+rev_advertising	Advertising	per_pax|elasticity_pax|one_off_step|overlay	spend_per_pax	medium_to_pax	contract renewal	ACI per-pax category (v9); no v8 line	TAS v9 ACI Concession Income Study tab
+rev_carpark	Car parking	per_pax|elasticity_pax|one_off_step|overlay	spend_per_pax_excl_transfer	medium_to_pax	operator contract renewal	Car parking: Unit revenue per Pax x [changes in total Pax, excluding transfers]	TAS v8 3a Clean, Suggested BPlan Driver column
+rev_carrental	Car rental	per_pax|elasticity_pax|one_off_step|overlay	spend_per_pax_excl_transfer	medium_to_pax	operator contract renewal	Car parking pattern (v8 analogue)	TAS v8 3a Clean pattern; working assumption
+rev_lounge	Lounge	per_pax|elasticity_pax|overlay	spend_per_pax	high_to_pax	operator contract renewal	In VIP lounges: Fixed % of ATM Runway charge (v8 aero-side); PRM/CIP: High elasticity to Total Pax growth (v8 3b)	TAS v8 3a/3b Clean, Suggested BPlan Driver column
+rev_property	Property rental	per_sqm|level|one_off_step|overlay	rent_per_sqm	none	lease renewal list	Rental of premises: Unit rate per SQM x [change in SQM]	TAS v8 3a Clean, Suggested BPlan Driver column
+rev_fuel_throughput	Fuel throughput	level|elasticity_pax|overlay	per_tonne_or_separate	none	fuel contract renewal	Tariff for provision of aviation fuels and lubricants: See separate assessment	TAS v8 3a Clean, Suggested BPlan Driver column
+rev_nonaero_other	Other non-aero	level|elasticity_pax|overlay	level	low_to_pax	none	Other income not prohibited by law: Profit on disposal? Zero going forward?	TAS v8 3a Clean, Suggested BPlan Driver column
+staff_costs	Staff costs	per_pax|elasticity_pax|one_off_step|overlay	cost_per_fte_x_headcount	low_to_pax	outsourcing / restructuring events	Full-time employees: Unit cost per Employee x [Change in headcount] - can be more detailed [by Dept]; KPI pay / social payment / temporary staff: % of FTE costs	TAS v8 3a Clean, Suggested BPlan Driver column
+opex_utilities	Utilities	per_sqm|elasticity_pax|overlay	rate_per_sqm	low_to_pax_water_lines	tariff resets	Electricity: Unit rate x [change in SQM], plus poss. elasticity to ATM growth; water/sewerage: Unit rate x [change in SQM] x [Change in Pax]	TAS v8 3a Clean, Suggested BPlan Driver column
+opex_rm	Repairs and maintenance	elasticity_pax|per_sqm|overlay	pct_of_asset_value_by_class	low_to_med_to_pax	post-capex step (whole new envelope)	Buildings/runways: Low elasticity to pax growth OR % of Terminal / Airfield asset value on balance sheet; vehicles/equipment: Med-Low elasticity OR % of Vehicle & Equipment asset value	TAS v8 3a Clean, Suggested BPlan Driver column
+opex_insurance	Insurance	level|overlay	pct_of_asset_value	none	renewal (annual)	Insurance Benchmark Analysis tab (v9)	TAS v9 Insurance Benchmark Analysis tab
+opex_rent	Rent and rates	per_sqm|level|overlay	rent_per_sqm	none	lease renewal list	Rental of premises: Unit rate per SQM x [change in SQM]	TAS v8 3a Clean, Suggested BPlan Driver column
+opex_marketing	Marketing	elasticity_pax|level|overlay	level	low_to_pax	campaign one-offs	Marketing research: Low elasticity to Pax growth	TAS v8 3a Clean, Suggested BPlan Driver column
+opex_cleaning	Cleaning	per_sqm|elasticity_pax|overlay	rate_per_sqm_x_pax	medium_to_pax	FM contract renewal	Garbage removal / water disposal: Unit rate x [change in SQM] x [Change in Pax]	TAS v8 3a Clean, Suggested BPlan Driver column
+opex_other	Other opex	elasticity_pax|level|overlay	level_or_pct_fte	low_to_pax	none	IT lines: Low elasticity to pax growth OR % of IT asset value on balance sheet; admin/catering/stationery: Fixed % of FTE costs; transport: Mid-Low elasticity to Pax growth	TAS v8 3a Clean, Suggested BPlan Driver column
+pax_dom	Passengers domestic	level|overlay	engine_pack	none	none	Engine-fed (spec 10 section 3 feed 3); manual plug day one	Spec 10 Forecast Studio, section 3
+pax_intl	Passengers international	level|overlay	engine_pack	none	none	Engine-fed (spec 10 section 3 feed 3); manual plug day one	Spec 10 Forecast Studio, section 3
+atm_dom	ATMs domestic	level|overlay	engine_pack_or_pax_over_load	none	none	Derived from pax / average load, or engine pack	Spec 10 Forecast Studio, section 3
+atm_intl	ATMs international	level|overlay	engine_pack_or_pax_over_load	none	none	Derived from pax / average load, or engine pack	Spec 10 Forecast Studio, section 3
+atm_cargo	ATMs cargo	level|overlay	engine_pack_or_manual	none	none	Cargo Tonnes case rows (v9 Control 2.11)	TAS v9 Control tab
+cargo_tonnes	Cargo tonnes	level|overlay	engine_pack_or_manual	none	none	Cargo Tonnes (v9 Control 2.11); Unit charge x Cargo tonnage lines hang off it	TAS v9 Control tab + v8 3a Clean

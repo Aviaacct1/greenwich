@@ -1,0 +1,72 @@
+# T1 assumptions, tier-2 demo (derived from tier-1 values; splits inherit the tier-1 rate) | 16 July 2026
+# metric_code	segment	case_id	year	value	unit	temporality	driver_type	step_date	step_value	repeat_years	source
+pax_dom	total	1	2024	1.2	m pax	forecast	level				working assumption, demo
+pax_intl	total	1	2024	4.3	m pax	forecast	level				working assumption, demo
+pax_dom	total	1	ALL	0.03	growth	forecast	overlay				working assumption, demo
+pax_intl	total	1	ALL	0.045	growth	forecast	overlay				working assumption, demo
+atm_dom	total	1	2024	12.0	k ATMs	forecast	level				working assumption, demo
+atm_intl	total	1	2024	34.0	k ATMs	forecast	level				working assumption, demo
+atm_cargo	total	1	2024	2.0	k ATMs	forecast	level				working assumption, demo
+atm_other	total	1	2024	1.5	k ATMs	forecast	level				working assumption, demo
+atm_dom	total	1	ALL	0.02	growth	forecast	overlay				working assumption, demo
+atm_intl	total	1	ALL	0.035	growth	forecast	overlay				working assumption, demo
+atm_cargo	total	1	ALL	0.02	growth	forecast	overlay				working assumption, demo
+rev_landing	dom	1	2024	3.2	EUR real	forecast	per_pax				tariff card 07, illustrative
+rev_landing	intl	1	2024	4.1	EUR real	forecast	per_pax				tariff card 07, illustrative
+rev_landing	cargo	1	2024	4.6	EUR real	forecast	per_pax				tariff card 07, illustrative
+rev_acft_parking	total	1	2024	0.6	EUR real	forecast	per_pax				illustrative
+rev_night_surcharge	total	1	2024	0.4	EUR real	forecast	per_pax				illustrative
+rev_pbb	total	1	2024	0.7	EUR real	forecast	per_pax				illustrative
+rev_aero_other	total	1	2024	0.3	EUR real	forecast	per_pax				illustrative
+conc_dutyfree	total	1	2024	6.5	EUR m	forecast	level				ACI card 08 scaled, illustrative
+conc_retail	total	1	2024	3.4	EUR m	forecast	level				illustrative
+conc_fb	total	1	2024	3.1	EUR m	forecast	level				illustrative
+rev_advertising	total	1	2024	0.9	EUR m	forecast	level				illustrative
+rev_carpark	total	1	2024	4.8	EUR m	forecast	level				illustrative
+rev_carrental	total	1	2024	1.4	EUR m	forecast	level				illustrative
+rev_lounge	total	1	2024	0.8	EUR m	forecast	level				illustrative
+rev_property	total	1	2024	5.6	EUR m	forecast	level				illustrative
+rev_fuel_throughput	total	1	2024	1.5	EUR m	forecast	level				illustrative
+rev_nonaero_other	total	1	2024	1.2	EUR m	forecast	level				illustrative
+conc_dutyfree	total	1	ALL	1.0	x	forecast	elasticity_pax				history p50 placeholder
+conc_retail	total	1	ALL	1.0	x	forecast	elasticity_pax				history p50 placeholder
+conc_fb	total	1	ALL	1.0	x	forecast	elasticity_pax				history p50 placeholder
+rev_advertising	total	1	ALL	1.0	x	forecast	elasticity_pax				history p50 placeholder
+rev_carpark	total	1	ALL	1.0	x	forecast	elasticity_pax				history p50 placeholder
+rev_carrental	total	1	ALL	1.0	x	forecast	elasticity_pax				history p50 placeholder
+rev_lounge	total	1	ALL	1.0	x	forecast	elasticity_pax				history p50 placeholder
+rev_property	total	1	ALL	1.0	x	forecast	elasticity_pax				history p50 placeholder
+rev_fuel_throughput	total	1	ALL	1.0	x	forecast	elasticity_pax				history p50 placeholder
+rev_nonaero_other	total	1	ALL	1.0	x	forecast	elasticity_pax				history p50 placeholder
+conc_dutyfree	total	1	2029	0.08	uplift	forecast	one_off_step	2029	0.08	6	contract renewal cycle, demo
+staff_costs	total	1	2024	22.0	EUR m	forecast	level				illustrative
+opex_utilities	total	1	2024	4.5	EUR m	forecast	level				illustrative
+opex_rm	total	1	2024	3.8	EUR m	forecast	level				illustrative
+opex_insurance	total	1	2024	1.2	EUR m	forecast	level				illustrative
+opex_rent	total	1	2024	1.0	EUR m	forecast	level				illustrative
+opex_marketing	total	1	2024	0.8	EUR m	forecast	level				illustrative
+opex_cleaning	total	1	2024	1.6	EUR m	forecast	level				illustrative
+opex_other	total	1	2024	2.4	EUR m	forecast	level				illustrative
+staff_costs	total	1	ALL	0.6	x	forecast	elasticity_pax				history placeholder
+opex_utilities	total	1	ALL	0.6	x	forecast	elasticity_pax				history placeholder
+opex_rm	total	1	ALL	0.6	x	forecast	elasticity_pax				history placeholder
+opex_insurance	total	1	ALL	0.6	x	forecast	elasticity_pax				history placeholder
+opex_rent	total	1	ALL	0.6	x	forecast	elasticity_pax				history placeholder
+opex_marketing	total	1	ALL	0.6	x	forecast	elasticity_pax				history placeholder
+opex_cleaning	total	1	ALL	0.6	x	forecast	elasticity_pax				history placeholder
+opex_other	total	1	ALL	0.6	x	forecast	elasticity_pax				history placeholder
+conc_dutyfree	total	1	ALL	0.3	x	forecast	elasticity_sqm				driver profile default, working assumption
+conc_retail	total	1	ALL	0.3	x	forecast	elasticity_sqm				driver profile default, working assumption
+conc_fb	total	1	ALL	0.3	x	forecast	elasticity_sqm				driver profile default, working assumption
+rev_psc	dom	1	2024	8.5	EUR real	forecast	per_pax				tier-2 split of tier-1 rate, working assumption
+rev_psc	intl	1	2024	8.5	EUR real	forecast	per_pax				tier-2 split of tier-1 rate, working assumption
+rev_security	pax_dom	1	2024	2.1	EUR real	forecast	per_pax				tier-2 split of tier-1 rate, working assumption
+rev_security	pax_intl	1	2024	2.1	EUR real	forecast	per_pax				tier-2 split of tier-1 rate, working assumption
+rev_security	cargo	1	2024	2.1	EUR real	forecast	per_pax				tier-2 split of tier-1 rate, working assumption
+rev_terminal_fee	dom	1	2024	1.8	EUR real	forecast	per_pax				tier-2 split of tier-1 rate, working assumption
+rev_terminal_fee	intl	1	2024	1.8	EUR real	forecast	per_pax				tier-2 split of tier-1 rate, working assumption
+rev_cute	dom	1	2024	0.5	EUR real	forecast	per_pax				tier-2 split of tier-1 rate, working assumption
+rev_cute	intl	1	2024	0.5	EUR real	forecast	per_pax				tier-2 split of tier-1 rate, working assumption
+rev_baggage	total	1	2024	0.4	EUR real	forecast	per_pax				tier-2 split of tier-1 rate, working assumption
+opex_spv	total	1	2024	1.8	EUR m	forecast	level				tier-2 demo, working assumption
+opex_spv	total	1	ALL	0.3	x	forecast	elasticity_pax				tier-2 demo, working assumption

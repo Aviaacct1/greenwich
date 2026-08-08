@@ -1,0 +1,12 @@
+# Macro vintage watch-list (note 16 section 4.2). Named reference sources, cadence, latest vintage seen.
+# The scheduled delta run (refresh_delta.py) updates latest_vintage_seen and last_seen_date; a project
+# model compares its pinned vintage against latest_vintage_seen to raise the WATCH (note 16 section 2).
+# filename_pattern is a case-insensitive substring matched against incoming file names.
+# source	metric_family	cadence	filename_pattern	home	latest_vintage_seen	last_seen_date	notes
+IMF WEO	gdp_growth	semiannual (Apr, Oct)	weo	E:\Avia\Data\IMF	None	None	WEO database, country x year
+Oxford Economics	gdp_growth	monthly	oef	E:\Avia\Data\Oxford Economics	None	None	signed agreement Jul 2024
+Global Insight	gdp_growth	monthly	global_insight	E:\Avia\Data\Global Insight	None	None	IHS / S&P Global
+EIU	gdp_growth	monthly	eiu	E:\Avia\Data\EIU	None	None	Economist Intelligence Unit
+ACI	traffic	annual	aci	E:\Avia\Data\ACI	None	None	airport economics and traffic
+Steer CAP series	construction_index	irregular	cap319	E:\Avia\Data\Steer	None	None	terminal capex benchmarks
+National stats	cpi	varies	cpi	E:\Avia\Data	None	None	country CPI and RPI
