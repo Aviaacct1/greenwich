@@ -6,9 +6,16 @@ container. This is point 4 of the Avia tool standard, and the reason for it is o
 three absolute paths from three different working sessions were left in this tree, and each
 one broke silently on the next host.
 
+AVIA_LOCAL_CACHE is estate-wide, not Greenwich's. Meridian reads it at app/config.py and DDFS
+at config.py, and in both it names the data root holding oag.duckdb, sabre.duckdb and the
+stores, which is C:\\Avia. Greenwich takes a subfolder of it and must never redefine it. This
+file originally read it as Greenwich's own root, and setting it for Greenwich on 8 August 2026
+would have pointed the other two tools at a folder with no stores in it, on the next new shell.
+One owner per constant applies to environment variables as much as to code.
+
 Resolution order for the data root:
-  1. AVIA_LOCAL_CACHE, if set
-  2. AVIA_GREENWICH_DATA, if set (a per-tool override, for a host that splits its stores)
+  1. AVIA_GREENWICH_DATA, if set. The per-tool variable, and the one to set.
+  2. <AVIA_LOCAL_CACHE>\\greenwich, if AVIA_LOCAL_CACHE is set and that subfolder exists.
   3. the first of the known defaults that exists on this machine
 
 Paths are found by landmark, never by counting folders up from __file__. find_reference()
@@ -37,24 +44,35 @@ class ConfigError(RuntimeError):
 
 
 def data_root():
-    """The Greenwich data root. Raises ConfigError listing what was tried, rather than guessing."""
-    for var in ("AVIA_LOCAL_CACHE", "AVIA_GREENWICH_DATA"):
-        v = os.environ.get(var)
-        if v:
-            if os.path.isdir(v):
-                return v
-            raise ConfigError(
-                f"{var} is set to {v!r} but that directory does not exist. "
-                "Point it at the Greenwich data root, or unset it to fall back to the defaults."
-            )
+    """The Greenwich data root. Raises ConfigError listing what was tried, rather than guessing.
+
+    AVIA_GREENWICH_DATA is Greenwich's own variable and wins. AVIA_LOCAL_CACHE is the estate
+    data root that Meridian and DDFS also read, so Greenwich takes the greenwich/ subfolder of
+    it and never treats it as its own root.
+    """
+    v = os.environ.get("AVIA_GREENWICH_DATA")
+    if v:
+        if os.path.isdir(v):
+            return v
+        raise ConfigError(
+            f"AVIA_GREENWICH_DATA is set to {v!r} but that directory does not exist. "
+            "Point it at the Greenwich data root, or unset it to fall back to the defaults."
+        )
     tried = []
+    shared = os.environ.get("AVIA_LOCAL_CACHE")
+    if shared:
+        cand = os.path.join(shared, "greenwich")
+        tried.append(f"{cand} (from AVIA_LOCAL_CACHE)")
+        if os.path.isdir(cand):
+            return cand
     for p in _DEFAULT_ROOTS:
         tried.append(p)
         if os.path.isdir(p):
             return p
     raise ConfigError(
-        "No Greenwich data root found. Set AVIA_LOCAL_CACHE to the folder holding "
-        f"{_REFERENCE_DIRNAME}/. Tried: " + ", ".join(tried)
+        "No Greenwich data root found. Set AVIA_GREENWICH_DATA to the folder holding "
+        f"{_REFERENCE_DIRNAME}/. Do NOT repoint AVIA_LOCAL_CACHE: Meridian and DDFS read it "
+        "as the estate data root. Tried: " + ", ".join(tried)
     )
 
 
@@ -112,6 +130,9 @@ def python_exe():
 def describe():
     """One line per resolved path, for check_env.py and for printing at the head of a run."""
     lines = []
+    lines.append(f"AVIA_GREENWICH_DATA: {os.environ.get('AVIA_GREENWICH_DATA') or '(not set)'}")
+    lines.append(f"AVIA_LOCAL_CACHE   : {os.environ.get('AVIA_LOCAL_CACHE') or '(not set)'}"
+                 "   [estate-wide: Meridian and DDFS read this too, do not repoint it]")
     try:
         lines.append(f"data root      : {data_root()}")
     except ConfigError as e:

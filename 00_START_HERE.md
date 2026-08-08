@@ -17,7 +17,9 @@ git clone https://github.com/Aviaacct1/greenwich.git C:\src\greenwich
 cd C:\src\greenwich
 rem  2. put the data root in place: E:\Avia\greenwich\reference holds the client and
 rem     reference workbooks. They are deliberately outside this repository.
-setx AVIA_LOCAL_CACHE "E:\Avia\greenwich"
+setx AVIA_GREENWICH_DATA "E:\Avia\greenwich"
+rem  do NOT repoint AVIA_LOCAL_CACHE: Meridian and DDFS read it as the estate
+rem  data root (C:\Avia, holding oag.duckdb and sabre.duckdb)
 py -3.12 -m pip install -r requirements.txt
 py -3.12 check_env.py
 ```
@@ -57,13 +59,18 @@ cells use `RRI` and are listed as unsupported, never skipped in silence.
 ## Paths
 
 Nothing in this tree hardcodes a path. `config.py` resolves every location from
-`AVIA_LOCAL_CACHE`, so provisioning a host changes one variable and no code. Protect that:
+`AVIA_GREENWICH_DATA`, so provisioning a host changes one variable and no code.
+
+`AVIA_LOCAL_CACHE` is estate-wide and belongs to no single tool: Meridian and DDFS both read it
+as the data root holding `oag.duckdb` and `sabre.duckdb`, which is `C:\Avia`. Greenwich falls
+back to the `greenwich\` subfolder of it and never redefines it. One owner per constant applies
+to environment variables as much as to code. Protect that:
 one hardcoded path breaks it silently on the next host, which is exactly what happened three
 times before 8 August 2026.
 
 ```
 Repository      C:\src\greenwich          code and configuration only
-Data root       E:\Avia\greenwich         AVIA_LOCAL_CACHE points here
+Data root       E:\Avia\greenwich         AVIA_GREENWICH_DATA points here
                   reference\              client and reference workbooks
                   outputs\                builds, created on demand
                   outputs_18Jul\          the 18 workbooks built 15-17 July 2026
