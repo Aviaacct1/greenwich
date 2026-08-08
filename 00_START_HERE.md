@@ -52,9 +52,22 @@ The acceptance oracle is separate and slower:
 py -3.12 plovdiv_oracle.py "Aero,Non-aero,Opex,Operations Summary"
 ```
 
-17,438 cells regenerated from Plovdiv's own cached inputs and diffed against its cached
-results. Max absolute difference 0.000e+00 on all four sheets as at 8 August 2026. Twelve
-cells use `RRI` and are listed as unsupported, never skipped in silence.
+17,438 cells regenerated from Plovdiv's own cached inputs and diffed against its cached results,
+across Aero (1,957), Non-aero (4,372), Opex (5,862) and Operations Summary (5,247). Twelve cells
+use `RRI` and are listed as unsupported, never skipped in silence.
+
+The pass threshold is 1e-9, which is float representation rather than a tolerance on the
+arithmetic. Two runs on 8 August 2026, both PASS:
+
+| Host | Max absolute difference |
+|---|---|
+| Dev PC, Windows, Python 3.12.10 | 1.421e-14 on three sheets, 2.842e-14 on Operations Summary |
+| Linux, Python 3.10.12 | 0.000e+00 on all four sheets |
+
+State the host when quoting the figure. The difference is summation order in the floating-point
+library, not a difference in the model, and it is fourteen orders of magnitude inside the
+threshold. A bare claim of "zero difference" describes one host and not the other, which is the
+kind of number that gets queried in review.
 
 ## Paths
 
